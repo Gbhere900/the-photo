@@ -11,6 +11,12 @@ public class ChangeableItem : MonoBehaviour
     }
 
 
+    private void OnDisable()
+    {
+        SceneManager.Instance().OnWorldStateChange -= SceneManager_OnWorldStateChange;
+    }
+
+
     virtual protected void SceneManager_OnWorldStateChange(WorldState worldState)
     {
         if (worldState != this.worldState)
