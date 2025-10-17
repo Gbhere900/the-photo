@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraDetect : MonoBehaviour
 {
@@ -13,7 +14,16 @@ public class CameraDetect : MonoBehaviour
     private CapsuleCollider triggerCollider; // 胶囊体触发器
 
 
+    [SerializeField] private Camera targetCamera; // 要捕获画面的相机（如主相机）
+    [SerializeField] private Image targetImage; // 显示画面的UI图片
+    //[SerializeField] private RenderTexture renderTexture; // 步骤1创建的渲染纹理
 
+    [SerializeField] private Transform PlayerUI;
+    private void Awake()
+    {
+       
+
+    }
 
     private void OnEnable()
     {
@@ -95,6 +105,56 @@ public class CameraDetect : MonoBehaviour
         CheckTrigger();
     }
 
+    public void OutputPhoto()
+    {
+        StartCoroutine(OutputPhotoIEnumerator());
+    }
+    public IEnumerator OutputPhotoIEnumerator()
+    {
+             PlayerUI.gameObject.SetActive(false);
+            // 初始化：设置相机的目标渲染纹理
+            yield return null;
+
+        int originalCullingMask = targetCamera.cullingMask;
+            targetCamera.cullingMask = originalCullingMask & ~(1 << LayerMask.NameToLayer("UI"));
+
+            RenderTexture tempRenderTexture = new RenderTexture(Screen.width, Screen.height, 24);
+            targetCamera.targetTexture = tempRenderTexture;
+            targetCamera.Render();
+            yield return new WaitForEndOfFrame();
+
+            Texture2D photoTexture = new Texture2D(
+            tempRenderTexture.width,
+            tempRenderTexture.height,
+            TextureFormat.RGB24,
+            false
+            );
+
+            photoTexture.ReadPixels(
+            new Rect(0, 0, tempRenderTexture.width, tempRenderTexture.height),
+            0, 0
+             );
+            photoTexture.Apply();
+            Material photoMaterial = new Material(Shader.Find("Unlit/Texture"));
+            photoMaterial.mainTexture = photoTexture;
+            targetImage.material = photoMaterial;
+
+             targetCamera.cullingMask = originalCullingMask;
+
+
+
+
+
+        //// 创建一个使用该渲染纹理的材质，并赋值给UI图片
+        //Material displayMaterial = new Material(Shader.Find("Unlit/Texture"));
+        //displayMaterial.mainTexture = renderTexture;
+        //targetImage.material = displayMaterial;
+
+        targetCamera.targetTexture = null;
+
+        PlayerUI.gameObject.SetActive(true);
+
+    }
     //private void ShowPositionUI(Vector2 screenPos)
     //{
     //    // 销毁已存在的UI
