@@ -1,0 +1,37 @@
+Thanks for purchasing this package.
+
+I hope you are going to have as much fun building your NEW Exteriors, as I have had compiling this package.
+Please could you STAR rate and possible review the package, it really assist others in making informed purchases when spending there hard earned money :)
+
+The Package Prefabs can be found at
+Assets\3DForge\FantasyExteriors\Village & Towns\Prefabs\Base\Roofs\Royal
+
+The 20 Handcrafted Premium BLUEPRINTS can be found at
+Assets\3DForge\Blueprints\PremiumBlueprints\PB_VEK\RoyalQuarters\BLUEPRINTS
+
+The New Textures/Materails can be applied by simply Dragging and Dropping the NEW ALT1 or ALT2 material onto a prefab in the scene.
+This emmediatly changes the prefab's look.
+Once you happy with the newly done desing, make a new prefab and chage the name.
+In this way you will be compiling your own custom Buildings Library for future use.
+
+There is a simple one page image that also shows this in this same folder by the name of How to use Royal Qaurters textures.jpg that visually shows and explain the same.
+
+Mobile & Desktop:
+The textures sheets has intuitive atlas textures usage, with a huge amount of prefabs reading of each textures sheet.
+This will assist with lowered draw calls especially when using Static Batching or MeshCombine functions.
+
+
+Enjoy
+Cobus
+info@3dforge.co.za
+
+Follow me on
+BLUEPRINTS  >>> https://forum.unity.com/threads/3dforge-blueprints.516396/#post-3407073
+Unity Forum >>> https://forum.unity.com/threads/3dforge-exteriors.316736/
+DISCORD     >>> https://discord.gg/ugN2CHr
+Twitter     >>> @3DForge
+Facebook    >>> https://www.facebook.com/pages/3DForge/535899169786851
+Website     >>> http://www.3dforge.co.za/ 
+
+You are allowed to use the textures with the 3D model but not extract and resell the texture itself
+One or more textures on these 3D models have been created with images from CGTextures.com 
