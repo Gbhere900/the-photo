@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
             {
                 CloseCamera();
             }
-            if (!isCameraOn)
+            else
             {
                 OpenCamera();
             }
@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
             HandleMouseLook();
         }
 
-        if (canWalk)
+        if (canWalk&&!isCameraOn)
         {
             HandleMovement();
         }
@@ -58,31 +58,31 @@ public class Player : MonoBehaviour
     {
         if (locked)
         {
-            // 锁定鼠标到屏幕中心并隐藏
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
         else
         {
-            // 解锁鼠标并显示
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 
     public void OpenCamera()
     {
         isCameraOn = true;
-        SetCursorState(false);
-        cameraDetect.enabled = true;
+        SetCursorState(true);
+        cameraDetect.gameObject.SetActive(true);
         //TODO:播放相机动画
     }
 
     public void CloseCamera()
     {
         isCameraOn = false;
-        SetCursorState(true);
-        cameraDetect.enabled = false;
+        SetCursorState(false);
+        cameraDetect.gameObject.SetActive(false);
         //TODO:播放相机动画
     }
 
@@ -105,6 +105,9 @@ public class Player : MonoBehaviour
 
         Vector3 moveDirection = transform.right * horizontal + transform.forward * vertical;
         moveDirection.Normalize();
+
+        transform.position += moveDirection * Time.deltaTime * speed;
+       
 
     }
 
