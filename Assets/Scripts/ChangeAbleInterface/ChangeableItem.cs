@@ -8,12 +8,20 @@ public class ChangeableItem : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.Instance().OnWorldStateChange += SceneManager_OnWorldStateChange;
+        if (SceneManager.Instance().GetCurrentWorldState() != worldState)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
 
     private void OnDisable()
     {
-        SceneManager.Instance().OnWorldStateChange -= SceneManager_OnWorldStateChange;
+        
+    }
+    private void OnDestroy()
+    {
+        SceneManager.Instance().OnWorldStateChange = SceneManager_OnWorldStateChange;
     }
 
 

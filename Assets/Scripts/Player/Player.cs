@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float mouseSensitivity = 2f;
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private CameraDetect cameraDetect;
+    [SerializeField] private CameraShake cameraShake;
 
     private float xRotation = 0f;
 
@@ -107,8 +108,16 @@ public class Player : MonoBehaviour
         moveDirection.Normalize();
 
         transform.position += moveDirection * Time.deltaTime * speed;
-       
 
+        if (moveDirection != Vector3.zero)
+        {
+            cameraShake.StartShake();
+        }
+        else
+        {
+            cameraShake.StopShake();
+        }
+       
     }
 
     private void OnDrawGizmosSelected()

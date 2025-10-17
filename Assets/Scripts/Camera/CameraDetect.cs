@@ -5,16 +5,25 @@ using UnityEngine;
 
 public class CameraDetect : MonoBehaviour
 {
-
+    
     [SerializeField] private AudioClip detectAudio;
     [SerializeField] private Transform detectUIPrefab;
 
+    [SerializeField] private TaskItem requestTaskItem;
     private CapsuleCollider triggerCollider; // 胶囊体触发器
 
 
 
 
     private void OnEnable()
+    {
+        SceneManager.Instance().OnWorldStateChange += ResetDetectUI;
+        CheckTrigger();
+
+
+    }
+
+    private void CheckTrigger()
     {
         triggerCollider = GetComponent<CapsuleCollider>();
         Vector3 center = transform.TransformPoint(triggerCollider.center); // 胶囊体中心（世界坐标）
@@ -47,17 +56,21 @@ public class CameraDetect : MonoBehaviour
             }
         }
     }
-
     private void OnTriggerEnter(Collider other)
     {
         TaskItem taskItem;
         if (other.TryGetComponent<TaskItem>(out taskItem))
         {
-            Vector2 screenPos = Camera.main.WorldToScreenPoint(other.transform.position);
-            Debug.Log("Detected" + other.gameObject.name);
-            // 显示UI
-           detectUIPrefab.gameObject.SetActive(true);
-            //TODO: 播放音效，UI
+            if (taskItem == requestTaskItem)
+            {
+                Debug.Log("Detected" + other.gameObject.name);
+                // 显示UI
+
+
+                detectUIPrefab.gameObject.SetActive(true);
+                //TODO: 播放音效，UI
+            }
+
         }
 
     }
@@ -74,6 +87,12 @@ public class CameraDetect : MonoBehaviour
         {
             
         }
+    }
+
+    private void ResetDetectUI(WorldState worldState)
+    {
+        detectUIPrefab.gameObject.SetActive(false);
+        CheckTrigger();
     }
 
     //private void ShowPositionUI(Vector2 screenPos)

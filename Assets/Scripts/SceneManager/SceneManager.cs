@@ -21,11 +21,15 @@ public class SceneManager : MonoBehaviour
 
     public static SceneManager Instance()
     {
+
         return instance;
     }
     private void Awake()
     {
         instance = this;
+
+
+        
     }
 
 
