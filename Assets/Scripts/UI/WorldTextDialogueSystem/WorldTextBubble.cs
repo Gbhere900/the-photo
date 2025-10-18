@@ -9,10 +9,12 @@ public class WorldTextBubble : MonoBehaviour
     private TextMesh textMesh;
     public float typeSpeed = 0.04f; // 打字效果的每字间隔
     private Sequence typingSequence; // 引用打字动画，以便可以中断它
+    private Vector3 originalScale; // 用于存储预制体的原始大小
 
     void Awake()
     {
         textMesh = GetComponent<TextMesh>();
+        originalScale = transform.localScale;
     }
 
     //初始化这个bubble的函数
@@ -32,12 +34,21 @@ public class WorldTextBubble : MonoBehaviour
 
         Destroy(gameObject, durationPerLine); // 仍按总时间销毁
     }
+
     // --- 新功能：用于显示一个持续的提示 ---
     public void ShowAsHint(string text, Transform target, Vector3 offset)
     {
         followTarget = target;
         localOffset = offset;
-        textMesh.text = text; // 对于简单的提示，直接显示文本，不需要打字效果
+        textMesh.text = text;
+
+        // --- 核心改动 ---
+        // 1. 立即将大小设置为0
+        transform.localScale = Vector3.zero;
+
+        // 2. 播放一个平滑的放大动画，恢复到原始大小
+        // Ease.OutBack 会产生一个很棒的、轻微“弹出”的弹性效果
+        transform.DOScale(originalScale, 0.5f).SetEase(Ease.OutBack);
     }
 
     // --- 新功能：用于外部调用的销毁方法 ---

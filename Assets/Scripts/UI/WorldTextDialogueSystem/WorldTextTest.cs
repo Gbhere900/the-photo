@@ -7,8 +7,6 @@ public class WorldTextTest : MonoBehaviour
     private bool isLocked = false;
     [SerializeField] private List<string> testLines;
 
-
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.T) && !isLocked)
