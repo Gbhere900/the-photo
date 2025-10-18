@@ -79,7 +79,7 @@ public abstract class InteractiveObjectBase : MonoBehaviour
             {
                 return false;
             }
-            
+
             return IsInteractionPossible();
         }
     }
