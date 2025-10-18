@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -10,6 +11,8 @@ public class Player : MonoBehaviour
     [SerializeField] private CameraDetect cameraDetect;
     [SerializeField] private CameraShake cameraShake;
     [SerializeField] private Transform buttons;
+    [SerializeField] private Vector3 squatDownOffset;
+    private bool isSquatDown = false;
 
     [SerializeField] private Animator cameraAnimator;
 
@@ -46,6 +49,17 @@ public class Player : MonoBehaviour
                 OpenCamera();
             }
         }
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            if (isSquatDown)
+            {
+                SquatUp();
+            }
+            else
+            {
+                SquatDown();
+            }
+        }
 
         // 只有鼠标锁定时才允许视角旋转（可选逻辑，根据需求调整）
         if (canTurn && !isCameraOn)
@@ -58,6 +72,20 @@ public class Player : MonoBehaviour
             HandleMovement();
         }
     }
+
+    private void SquatDown()
+    {
+        cameraShake.StopShake();
+        cameraTransform.position += squatDownOffset;
+        isSquatDown = true;
+    }
+    private void SquatUp()
+    {
+        cameraShake.StopShake();
+        cameraTransform.position -= squatDownOffset;
+        isSquatDown = false;
+    }
+
 
     // 设置鼠标状态（锁定/解锁 + 显示/隐藏）
     private void SetCursorState(bool locked)

@@ -5,7 +5,8 @@ public class CameraShake : MonoBehaviour
     [Header("晃动参数")]
     [SerializeField] private AnimationCurve shakeCurve; // 晃动曲线（控制幅度变化）
     [SerializeField] private float shakeFrequency = 10f; // 晃动频率（每秒次数）
-    [SerializeField] private float shakeIntensity = 0.02f; // 晃动幅度
+    [SerializeField] private float xShakeIntensity = 0.02f; // 晃动幅度
+    [SerializeField] private float yShakeIntensity = 0.02f; // 晃动幅度
     [SerializeField] private Transform cameraTransform; // 要晃动的相机
 
     private Vector3 originalLocalPos; // 相机初始局部位置
@@ -28,6 +29,7 @@ public class CameraShake : MonoBehaviour
         {
             isShaking = true;
             shakeTime = 0;
+            originalLocalPos = cameraTransform.localPosition;
         }
 
     }
@@ -57,8 +59,8 @@ public class CameraShake : MonoBehaviour
         float curveValue = shakeCurve.Evaluate(shakeTime % 1f); // 取0~1之间的循环值
 
         // 计算X和Y轴的随机晃动偏移（基于正弦函数使晃动更平滑）
-        float offsetX = Mathf.Sin(shakeTime * 2) * curveValue * shakeIntensity;
-        float offsetY = Mathf.Cos(shakeTime * 1.5f) * curveValue * shakeIntensity;
+        float offsetX = Mathf.Sin(shakeTime * 2) * curveValue * xShakeIntensity;
+        float offsetY = Mathf.Cos(shakeTime * 1.5f) * curveValue * yShakeIntensity;
 
         // 应用晃动（在初始位置基础上叠加偏移）
         cameraTransform.localPosition = originalLocalPos + new Vector3(offsetX, offsetY, 0);
