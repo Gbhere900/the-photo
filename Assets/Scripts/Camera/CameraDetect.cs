@@ -182,6 +182,7 @@ public class CameraDetect : MonoBehaviour
 
     public void OutputToPhoto()
     {
+        Tagofphoto.Instance.settrue();
         StartCoroutine(OutputToPhotoIEnumerator());
 
         if (CheckTaskItemInTrigger())
