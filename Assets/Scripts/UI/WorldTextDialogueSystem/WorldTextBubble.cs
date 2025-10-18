@@ -8,6 +8,7 @@ public class WorldTextBubble : MonoBehaviour
     private Transform followTarget;
     private TextMesh textMesh;
     public float typeSpeed = 0.04f; // 打字效果的每字间隔
+    private Sequence typingSequence; // 引用打字动画，以便可以中断它
 
     void Awake()
     {
@@ -21,15 +22,40 @@ public class WorldTextBubble : MonoBehaviour
         textMesh.text = "";
 
         // 打字机动画：每字一个 DOTween 延迟
-        Sequence seq = DOTween.Sequence();
+        typingSequence = DOTween.Sequence();
         for (int i = 0; i <= fullText.Length; i++)
         {
             string sub = fullText.Substring(0, i);
-            seq.AppendCallback(() => textMesh.text = sub);
-            seq.AppendInterval(typeSpeed);
+            typingSequence.AppendCallback(() => textMesh.text = sub);
+            typingSequence.AppendInterval(typeSpeed);
         }
 
         Destroy(gameObject, durationPerLine); // 仍按总时间销毁
+    }
+    // --- 新功能：用于显示一个持续的提示 ---
+    public void ShowAsHint(string text, Transform target, Vector3 offset)
+    {
+        followTarget = target;
+        localOffset = offset;
+        textMesh.text = text; // 对于简单的提示，直接显示文本，不需要打字效果
+    }
+
+    // --- 新功能：用于外部调用的销毁方法 ---
+    public void DestroyBubble()
+    {
+        // 停止所有正在进行的动画
+        if (typingSequence != null && typingSequence.IsActive())
+        {
+            typingSequence.Kill();
+        }
+        transform.DOKill();
+
+        // 播放一个平滑的缩小消失动画，动画结束后再销毁对象
+        transform.DOScale(Vector3.zero, 0.5f)
+                 .SetEase(Ease.InBack) // InBack 效果会有一个轻微的回弹，感觉很棒
+                 .OnComplete(() => {
+                     Destroy(gameObject);
+                 });
     }
 
     //设置好字的位置和朝向

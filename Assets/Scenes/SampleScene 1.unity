@@ -2662,9 +2662,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1354181501}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39a6da7981bcf6d4f90c29ffb4e4121a, type: 3}
+  m_Script: {fileID: 11500000, guid: 5eb43600c4180d547a27e05e3e081e22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pages: []
+  albumUI: {fileID: 0}
 --- !u!1 &1375361757 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 89176ac1077e625488b376c1afe96dd9,
@@ -3671,8 +3673,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u8FD9\u662F\u6211\u7684\u72D7"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 20b173f803a7c0544b0bc823c67eabdf, type: 2}
+  m_sharedMaterial: {fileID: -5948016514386370208, guid: 20b173f803a7c0544b0bc823c67eabdf,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3696,7 +3699,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 44.75
+  m_fontSize: 35.7
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
