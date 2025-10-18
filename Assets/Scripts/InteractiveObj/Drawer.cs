@@ -8,6 +8,7 @@ public class Drawer : InteractiveObjectBase
     [SerializeField] private Vector3 moveDirection;
     [SerializeField] private float moveDistance;
     [SerializeField] private float moveSpeed;
+    [SerializeField] private GameObject letter;
     
     private bool isMoving = false;
     private bool isOpen = false;
@@ -50,6 +51,11 @@ public class Drawer : InteractiveObjectBase
         if (!isOpen || isMoving)
         {
             return;
+        }
+        // 将信重新设为子对象
+        if (letter)
+        {
+            letter.transform.parent = transform;   
         }
         
         // 停止之前的移动协程
@@ -97,5 +103,14 @@ public class Drawer : InteractiveObjectBase
         // 确保最终位置准确
         transform.localPosition = targetPosition;
         isMoving = false;
+        // 若最终是打开状态
+        if (targetPosition == openPosition)
+        {
+            // 解除信和抽屉的父子关系
+            if (letter)
+            {
+                letter.transform.parent = null;   
+            }
+        }
     }
 }

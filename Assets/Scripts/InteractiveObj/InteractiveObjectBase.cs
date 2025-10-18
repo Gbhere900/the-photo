@@ -13,6 +13,9 @@ public abstract class InteractiveObjectBase : MonoBehaviour
     [SerializeField] protected float cooldownTime;
     [SerializeField] protected bool isHighlight = false;
     [SerializeField] protected float outlineWidth = 10f;
+    
+    [Header("其它参数")]
+    [SerializeField] protected string name;
 
     private bool isIntersectingWithDetector = false;
     private bool isInSight = false;
