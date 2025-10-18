@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d16f720fb4f0cf94f9fd83c35919a551, type: 3}
   m_Name: AlbumPageProperty5
   m_EditorClassIdentifier: 
-  taskIndex: 0
-  pageDescription: 
+  taskIndex: 5
+  pageDescription: "\u8FD9\u662F\u4EFB\u52A15\u7684\u7167\u7247\u63CF\u8FF0"
