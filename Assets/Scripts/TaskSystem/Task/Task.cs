@@ -8,9 +8,9 @@ public class Task : ScriptableObject
 {
     public enum TaskStatus
     {
-        Pending = 0,    // å¾…æ¥å–
-        InProgress = 1, // è¿›è¡Œä¸­
-        Completed = 2   // å·²å®Œæˆ
+        Pending = 0,    // ´ı½ÓÈ¡
+        InProgress = 1, // ½øĞĞÖĞ
+        Completed = 2   // ÒÑÍê³É
     };
     
     [SerializeField] private int id;
@@ -21,14 +21,14 @@ public class Task : ScriptableObject
 
     private static readonly List<string> taskStatusString = new List<string>
     {
-        "å¾…æ¥å–",  // ç´¢å¼•0 - Pending
-        "è¿›è¡Œä¸­",  // ç´¢å¼•1 - InProgress
-        "å·²å®Œæˆ"   // ç´¢å¼•2 - Completed
+        "´ı½ÓÈ¡",  // Ë÷Òı0 - Pending
+        "½øĞĞÖĞ",  // Ë÷Òı1 - InProgress
+        "ÒÑÍê³É"   // Ë÷Òı2 - Completed
     };
     
-    //--------------------------å·¥å…·æ–¹æ³•--------------------------
+    //--------------------------¹¤¾ß·½·¨--------------------------
     /// <summary>
-    /// TaskStatusæšä¸¾è½¬åŒ–ä¸ºå­—ç¬¦ä¸²
+    /// TaskStatusÃ¶¾Ù×ª»¯Îª×Ö·û´®
     /// </summary>
     /// <param name="status"></param>
     /// <returns></returns>
@@ -37,7 +37,7 @@ public class Task : ScriptableObject
         return taskStatusString[(int)status];
     }
     
-    //--------------------------å…¬å…±æ¥å£--------------------------
+    //--------------------------¹«¹²½Ó¿Ú--------------------------
     public int GetTaskId()
     {
         return id;

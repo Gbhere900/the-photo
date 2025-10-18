@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-// 任务管理类：单例模式
+// 任务管理类单例
 public class TaskSystemManager : SingletonMonoBase<TaskSystemManager>
 {
-    [FormerlySerializedAs("taskQueue")]
     [Header("任务队列")]
-    [SerializeField] private List<Task> taskList;
+    [SerializeField] private List<Task> taskList = new List<Task>();
     
     [Header("当前任务")]
-    private int currentTaskIndex;
     [SerializeField] private Task currentTask;
+    private int currentTaskIndex;
 
     protected override void Awake()
     {
@@ -76,7 +75,7 @@ public class TaskSystemManager : SingletonMonoBase<TaskSystemManager>
             return;
         }
         currentTask.SetTaskType(Task.TaskStatus.Completed);
-        Debug.Log(string.Format("任务:{0} 完成!", currentTask.GetTaskName()));
+        Debug.Log(string.Format("任务:{{0}} 完成!", currentTask.GetTaskName()));
         currentTask = null;
         
         // 累加任务索引，指向下一个任务
@@ -97,6 +96,16 @@ public class TaskSystemManager : SingletonMonoBase<TaskSystemManager>
     public Task GetCurrentTask()
     {
         return currentTask;
+    }
+
+    public Task GetTaskByIndex(int index)
+    {
+        if (index < 0 || index >= taskList.Count)
+        {
+            Debug.LogError("Task index is out of range");
+            return null;
+        }
+        return taskList[index];
     }
 
     public bool IsAllTaskCompleted()
