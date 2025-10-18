@@ -9,9 +9,10 @@ public class CameraDetect : MonoBehaviour
 {
 
     [SerializeField] private AudioClip detectAudio;
-    [SerializeField] private Transform detectUIPrefab;
+    [SerializeField] private Transform detectUI;
+    [SerializeField] private Transform checkPassUI;
 
-    [SerializeField] private TaskItem requestTaskItem;
+   //[SerializeField] private TaskItem requestTaskItem;
     private CapsuleCollider triggerCollider; // 胶囊体触发器
 
 
@@ -24,6 +25,7 @@ public class CameraDetect : MonoBehaviour
     [SerializeField] private Image targetImage_Camera;
     //[SerializeField] private RenderTexture renderTexture; // 步骤1创建的渲染纹理
 
+    private bool currentTaskDone = false;
     private void Awake()
     {
 
@@ -33,21 +35,60 @@ public class CameraDetect : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.Instance().OnWorldStateChange += ResetDetectUI;
-        CheckTrigger();
+        if (CheckTaskItemInTrigger())
+        {
+            detectUI.gameObject.SetActive(true);
+            //TODO: 播放音效
+        }
 
 
     }
     private void OnDisable()
     {
-        if (detectUIPrefab)
+        if (detectUI)
         {
-            detectUIPrefab.gameObject.SetActive(false);
+            detectUI.gameObject.SetActive(false);
         }
+
         
         SceneManager.Instance().OnWorldStateChange -= ResetDetectUI;
     }
 
-    private void CheckTrigger()
+    //private void CheckTrigger()
+    //{
+    //    triggerCollider = GetComponent<CapsuleCollider>();
+    //    Vector3 center = transform.TransformPoint(triggerCollider.center); // 胶囊体中心（世界坐标）
+    //    float height = triggerCollider.height; // 胶囊体高度（包含两个半球）
+    //    float radius = triggerCollider.radius; // 胶囊体半径
+
+    //    // 胶囊体的轴向（CapsuleCollider默认Y轴，可通过direction修改：0=X，1=Y，2=Z）
+    //    Vector3 axis = Vector3.up; // 默认Y轴
+    //    if (triggerCollider.direction == 0) axis = Vector3.right;
+    //    else if (triggerCollider.direction == 2) axis = Vector3.forward;
+
+    //    // 计算胶囊体的两个端点（世界坐标）
+    //    Vector3 point1 = center + axis * (height / 2 - radius); // 上端点
+    //    Vector3 point2 = center - axis * (height / 2 - radius); // 下端点
+
+    //    // 手动检测胶囊体内的所有碰撞体
+    //    Collider[] overlappedColliders = Physics.OverlapCapsule(
+    //        point1,       // 胶囊体上端点
+    //        point2,       // 胶囊体下端点
+    //        radius,       // 胶囊体半径
+    //        ~0            // 检测所有层级（可自定义层级掩码）
+    //    );
+
+    //    // 遍历检测到的碰撞体，模拟触发OnTriggerEnter
+    //    foreach (var col in overlappedColliders)
+    //    {
+    //        if (col != triggerCollider) // 排除自身碰撞体
+    //        {
+    //            OnTriggerEnter(col); // 调用触发逻辑
+    //        }
+    //    }
+    //}
+
+    private bool CheckTaskItemInTrigger()
     {
         triggerCollider = GetComponent<CapsuleCollider>();
         Vector3 center = transform.TransformPoint(triggerCollider.center); // 胶囊体中心（世界坐标）
@@ -76,28 +117,41 @@ public class CameraDetect : MonoBehaviour
         {
             if (col != triggerCollider) // 排除自身碰撞体
             {
-                OnTriggerEnter(col); // 调用触发逻辑
+                TaskItem taskItem;
+                if (col.TryGetComponent<TaskItem>(out taskItem))
+                {
+                    
+                    if (taskItem == TaskSystemManager.Instance.GetCurrentTask().GetTaskItem())
+                    {
+                        return true;
+
+                    }
+
+                }
             }
         }
+        return false;
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        TaskItem taskItem;
-        if (other.TryGetComponent<TaskItem>(out taskItem))
-        {
-            if (taskItem == requestTaskItem)
-            {
-                Debug.Log("Detected" + other.gameObject.name);
-                // 显示UI
 
 
-                detectUIPrefab.gameObject.SetActive(true);
-                //TODO: 播放音效，UI
-            }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    TaskItem taskItem;
+    //    if (other.TryGetComponent<TaskItem>(out taskItem))
+    //    {
+    //        if (taskItem == requestTaskItem)
+    //        {
+    //            Debug.Log("Detected" + other.gameObject.name);
+    //            // 显示UI
 
-        }
 
-    }
+    //            detectUIPrefab.gameObject.SetActive(true);
+    //            //TODO: 播放音效，UI
+    //        }
+
+    //    }
+
+    //}
 
 
 
@@ -110,15 +164,34 @@ public class CameraDetect : MonoBehaviour
         }
     }
 
+
+
     private void ResetDetectUI(WorldState worldState)
     {
-        detectUIPrefab.gameObject.SetActive(false);
-        CheckTrigger();
+        detectUI.gameObject.SetActive(false);
+        if (CheckTaskItemInTrigger())
+        {
+            detectUI.gameObject.SetActive(true);
+            // 显示UI
+        }
     }
 
     public void OutputToPhoto()
     {
         StartCoroutine(OutputToPhotoIEnumerator());
+
+        if (CheckTaskItemInTrigger())
+        {
+            checkPassUI.gameObject.SetActive(true);
+            currentTaskDone = true;
+            //TODO: 播放音效，UI
+        }
+        else
+        {
+            checkPassUI.gameObject.SetActive(false);
+            currentTaskDone = false;
+            //TODO: 播放音效，UI
+        }
     }
     public IEnumerator OutputToPhotoIEnumerator()
     {
@@ -160,7 +233,8 @@ public class CameraDetect : MonoBehaviour
         //targetImage.material = displayMaterial;
 
         targetCamera.targetTexture = null;
-
+        secondaryCamera.targetTexture = renderTexture;
+       
 
     }
 

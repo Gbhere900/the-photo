@@ -5,6 +5,9 @@ public class WorldTextTest : MonoBehaviour
 {
     public Transform targetNPC; // 拖一个测试目标物体，比如 NPC、Cube 等
     private bool isLocked = false;
+    [SerializeField] private List<string> testLines;
+
+
 
     void Update()
     {
@@ -18,12 +21,7 @@ public class WorldTextTest : MonoBehaviour
             }
 
             isLocked = true;
-            List<string> testLines = new List<string>
-            {
-                "你好，冒险者。",
-                "这是任务 1 的提示对话。",
-                "文字太长了？我们会自动分页。"
-            };
+
 
             // --- 修改这里 ---
             // 将 transform 改为 targetNPC

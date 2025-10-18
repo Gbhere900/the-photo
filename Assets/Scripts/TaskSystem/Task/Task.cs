@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-[CreateAssetMenu(fileName = "NewTask", menuName = "TaskSystem/Task")]
-public class Task : ScriptableObject
+[Serializable]
+public class Task 
 {
     public enum TaskStatus
     {
@@ -13,8 +14,8 @@ public class Task : ScriptableObject
         Completed = 2   // 已完成
     };
     
-    [SerializeField] private int id;
-    [SerializeField] private string name;
+   // [SerializeField] private int id;
+    [SerializeField] private string id;
     [SerializeField] private string description;
     [SerializeField] private TaskItem taskItem;
     [FormerlySerializedAs("taskType")] [SerializeField] private TaskStatus taskStatus;
@@ -38,14 +39,11 @@ public class Task : ScriptableObject
     }
     
     //--------------------------公共接口--------------------------
-    public int GetTaskId()
+
+
+    public string GetTaskId()
     {
         return id;
-    }
-
-    public string GetTaskName()
-    {
-        return name;
     }
 
     public string GetTaskDescription()

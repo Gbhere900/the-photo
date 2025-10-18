@@ -2,17 +2,17 @@
 
 public class DialogueTrigger : MonoBehaviour
 {
-    public string taskId; // 当前任务编号
+    //public string taskId; // 当前任务编号
     private bool isPlayerInRange = false;
 
     void Update()
     {
-        if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
+        if (isPlayerInRange && Input.GetKeyDown(KeyCode.F))
         {
             var data = GetComponent<DialogueData>();
             if (data != null)
             {
-                var lines = data.GetDialogue(taskId);
+                var lines = data.GetDialogue(TaskSystemManager.Instance.GetCurrentTask().GetTaskId());
                 WorldTextManager.Instance.ShowDialogue(transform, lines);
             }
         }

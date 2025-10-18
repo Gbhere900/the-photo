@@ -23,13 +23,15 @@ public class Player : MonoBehaviour
         {
             cameraTransform = transform.Find("MainCamera");
         }
-        cameraDetect.OutPutToCamera();
+        //cameraDetect.OutPutToCamera();
+
         //初始关闭相机
         CloseCamera();
     }
 
     private void Update()
     {
+        cameraDetect.OutPutToCamera();
         // 处理E键切换鼠标状态
         if (Input.GetKeyDown(KeyCode.E))
         {

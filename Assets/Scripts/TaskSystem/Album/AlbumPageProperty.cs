@@ -19,7 +19,7 @@ public class AlbumPageProperty : ScriptableObject
         {
             return string.Empty;
         }
-        return pageTask.GetTaskName();
+        return pageTask.GetTaskId();
     }
 
     public string GetPageDescription()

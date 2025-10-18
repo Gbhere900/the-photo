@@ -12,7 +12,7 @@ public class TaskSystemTestScript : MonoBehaviour
             Task currentTask = TaskSystemManager.Instance.GetCurrentTask();
             if (currentTask != null)
             {
-                Debug.Log(string.Format("目前任务:{0}", currentTask.GetTaskName()));
+                Debug.Log(string.Format("目前任务:{0}", currentTask.GetTaskId()));
             }
             else
             {
