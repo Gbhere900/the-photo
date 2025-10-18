@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CameraDetect : MonoBehaviour
 {
-    
+
     [SerializeField] private AudioClip detectAudio;
     [SerializeField] private Transform detectUIPrefab;
 
@@ -15,14 +16,18 @@ public class CameraDetect : MonoBehaviour
 
 
     [SerializeField] private Camera targetCamera; // 要捕获画面的相机（如主相机）
-    [SerializeField] private Image targetImage; // 显示画面的UI图片
+    [SerializeField] private Image targetImage_Photo; // 显示画面的UI图片
+
+    [SerializeField] private Camera secondaryCamera;
+    [SerializeField] private Material displayMaterial;
+    [SerializeField] private RenderTexture renderTexture;
+    [SerializeField] private Image targetImage_Camera;
     //[SerializeField] private RenderTexture renderTexture; // 步骤1创建的渲染纹理
 
-    [SerializeField] private Transform PlayerUI;
     private void Awake()
     {
-       
 
+        
     }
 
     private void OnEnable()
@@ -31,6 +36,15 @@ public class CameraDetect : MonoBehaviour
         CheckTrigger();
 
 
+    }
+    private void OnDisable()
+    {
+        if (detectUIPrefab)
+        {
+            detectUIPrefab.gameObject.SetActive(false);
+        }
+        
+        SceneManager.Instance().OnWorldStateChange -= ResetDetectUI;
     }
 
     private void CheckTrigger()
@@ -85,17 +99,14 @@ public class CameraDetect : MonoBehaviour
 
     }
 
-    private void OnDisable()
-    {
-        detectUIPrefab.gameObject.SetActive(false);
-    }
+
 
     private void OnTriggerExit(Collider other)
     {
         TaskItem taskItem;
         if (other.TryGetComponent<TaskItem>(out taskItem))
         {
-            
+
         }
     }
 
@@ -105,43 +116,41 @@ public class CameraDetect : MonoBehaviour
         CheckTrigger();
     }
 
-    public void OutputPhoto()
+    public void OutputToPhoto()
     {
-        StartCoroutine(OutputPhotoIEnumerator());
+        StartCoroutine(OutputToPhotoIEnumerator());
     }
-    public IEnumerator OutputPhotoIEnumerator()
+    public IEnumerator OutputToPhotoIEnumerator()
     {
-             PlayerUI.gameObject.SetActive(false);
-            // 初始化：设置相机的目标渲染纹理
-            yield return null;
 
-        int originalCullingMask = targetCamera.cullingMask;
-            targetCamera.cullingMask = originalCullingMask & ~(1 << LayerMask.NameToLayer("UI"));
+        // 初始化：设置相机的目标渲染纹理
+        yield return null;
 
-            RenderTexture tempRenderTexture = new RenderTexture(Screen.width, Screen.height, 24);
-            targetCamera.targetTexture = tempRenderTexture;
-            targetCamera.Render();
-            yield return new WaitForEndOfFrame();
+      
+        RenderTexture tempRenderTexture = new RenderTexture(Screen.width, Screen.height, 24);
+        targetCamera.targetTexture = tempRenderTexture;
+        targetCamera.Render();
+        yield return new WaitForEndOfFrame();
 
-            Texture2D photoTexture = new Texture2D(
-            tempRenderTexture.width,
-            tempRenderTexture.height,
-            TextureFormat.RGB24,
-            false
-            );
+        Texture2D photoTexture = new Texture2D(
+        tempRenderTexture.width,
+        tempRenderTexture.height,
+        TextureFormat.RGB24,
+        false
+        );
 
-            photoTexture.ReadPixels(
-            new Rect(0, 0, tempRenderTexture.width, tempRenderTexture.height),
-            0, 0
-             );
-            photoTexture.Apply();
-            Material photoMaterial = new Material(Shader.Find("Unlit/Texture"));
-            photoMaterial.mainTexture = photoTexture;
-            targetImage.material = photoMaterial;
+        RenderTexture.active = tempRenderTexture;
 
-             targetCamera.cullingMask = originalCullingMask;
+        photoTexture.ReadPixels(
+        new Rect(0, 0, tempRenderTexture.width, tempRenderTexture.height),
+        0, 0
+         );
+        photoTexture.Apply();
 
-
+        RenderTexture.active = null;
+        Material photoMaterial = new Material(Shader.Find("Unlit/Texture"));
+        photoMaterial.mainTexture = photoTexture;
+        targetImage_Photo.material = photoMaterial;
 
 
 
@@ -152,34 +161,49 @@ public class CameraDetect : MonoBehaviour
 
         targetCamera.targetTexture = null;
 
-        PlayerUI.gameObject.SetActive(true);
 
     }
-    //private void ShowPositionUI(Vector2 screenPos)
-    //{
-    //    // 销毁已存在的UI
-    //    if (currentUI != null)
-    //        Destroy(currentUI.gameObject);
 
-    //    // 实例化UI预制体
-    //    currentUI = Instantiate(detectUIPrefab, canvas.transform);
-    //    RectTransform uiRect = currentUI.GetComponent<RectTransform>();
+    private void OnDestroy()
+    {
+        //// 清理：恢复相机默认渲染目标（避免场景切换后相机画面异常）
+        //if (targetCamera != null)
+        //    targetCamera.targetTexture = null;
 
-    //    // 1. 处理Canvas为Screen Space - Overlay的情况（最常见）
-    //    // 转换Y轴：屏幕坐标Y（原点左下）→ UI坐标Y（原点左上）
-    //    float uiY = Screen.height - screenPos.y;
+        //// 销毁动态创建的材质（避免内存泄漏）
+        //if (targetImage_Photo != null && targetImage_Photo.material != null)
+        //    Destroy(targetImage_Photo.material);
+    }
 
-    //    // 2. 处理UI锚点（假设锚点为中心，需修正偏移）
-    //    // 若UI锚点是中心，需减去自身一半尺寸，避免位置偏移
-    //    Vector2 uiPivotOffset = new Vector2(
-    //        uiRect.rect.width * uiRect.pivot.x,
-    //        uiRect.rect.height * uiRect.pivot.y
-    //    );
 
-    //    // 最终UI位置 = 转换后的屏幕坐标 - 锚点偏移
-    //    Vector2 uiPosition = new Vector2(screenPos.x, uiY) - uiPivotOffset;
+    public  void OutPutToCamera()
+    {
 
-    //    // 设置UI位置
-    //    uiRect.anchoredPosition = uiPosition;
-    //}
+
+        // 自动获取组件（如果未在Inspector赋值）
+        if (secondaryCamera == null)
+        {
+            Debug.LogError("secondaryCamera未赋值");
+        }
+
+        if (targetImage_Camera == null)
+            targetImage_Camera = GetComponent<Image>();
+
+        // 初始化：设置相机的目标渲染纹理
+        if (renderTexture != null)
+        {
+
+
+            // 创建一个使用该渲染纹理的材质，并赋值给UI图片
+            //Material displayMaterial = new Material(Shader.Find("Unlit/Texture"));
+            displayMaterial.mainTexture = renderTexture;
+            //targetImage_Camera.material = displayMaterial;
+        }
+        else
+        {
+            Debug.LogError("请赋值RenderTexture！");
+        }
+
+    }
+
 }
