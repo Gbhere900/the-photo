@@ -82,7 +82,7 @@ public class AlbumManager : SingletonMonoBase<AlbumManager>
             Debug.LogWarning("超出索引范围，无法更改到目标页面");
             return ; 
         }
-        albumUI.ChangePage(pages[index].GetAlbumPageProperty().GetPageDescription(), pages[index].GetCurrentPhotoMaterial());
+        albumUI.ChangePage(pages[index].GetAlbumPageProperty().GetPageDescription(), pages[index].GetPhotoMaterial());
     }
 
     public void HidePage()
@@ -113,5 +113,10 @@ public class AlbumManager : SingletonMonoBase<AlbumManager>
     {
         currentPageIndex--;
         ChangePage(currentPageIndex);
+    }
+
+    public  AlbumPage GetCurrentPage()
+    {
+        return pages[currentPageIndex];
     }
 }
