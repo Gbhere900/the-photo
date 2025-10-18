@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 public abstract class InteractiveObjectBase : MonoBehaviour
@@ -10,8 +11,14 @@ public abstract class InteractiveObjectBase : MonoBehaviour
     [SerializeField] protected bool isHighlight = false;
 
     protected float lastInteractTime;
+    protected GameObject player;
 
-    protected virtual void Start() { Initialized(); }
+    protected virtual void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        
+        Initialized();
+    }
     
     protected virtual void Update()
     {
@@ -25,29 +32,38 @@ public abstract class InteractiveObjectBase : MonoBehaviour
     {
         get
         {
+            // ½»»¥ÀäÈ´Ê±¼äÅÐ¶Ï
             if (cooldownTime > 0 && Time.time < lastInteractTime + cooldownTime)
+            {
+                return false;
+            }
+            // ½»»¥¾àÀëÅÐ¶Ï
+            if (!player || Vector3.Distance(this.transform.position, player.transform.position) > interactiveDistance)
             {
                 return false;
             }
             return IsInteractionPossible();
         }
     }
-    
+
     /// <summary>
     /// ÅÐ¶Ï½»»¥ÊÇ·ñ¿ÉÐÐ
     /// </summary>
     /// <returns></returns>
     protected abstract bool IsInteractionPossible();
-    
+
     /// <summary>
     /// ³õÊ¼»¯
     /// </summary>
-    protected abstract void Initialized();
+    protected virtual void Initialized()
+    {
+        lastInteractTime = -cooldownTime;
+    }
 
     /// <summary>
     /// ¼ì²âÍæ¼ÒÊäÈë
     /// </summary>
-    protected virtual void CheckPlayerInput()
+    private void CheckPlayerInput()
     {
         // F¼ü½»»¥
         if (Input.GetKeyDown(KeyCode.F) && CanInteract)
@@ -59,7 +75,7 @@ public abstract class InteractiveObjectBase : MonoBehaviour
     /// <summary>
     /// ½»»¥º¯Êý
     /// </summary>
-    protected virtual void Interact()
+    private void Interact()
     {
         if (!CanInteract)
         {
