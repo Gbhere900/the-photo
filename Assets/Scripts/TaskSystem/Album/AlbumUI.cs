@@ -17,8 +17,14 @@ public class AlbumUI : MonoBehaviour
         photoImage.material = material;
     }
 
+    public void ChangePage(AlbumPage page)
+    {
+        this.description.text = page.GetAlbumPageProperty().GetPageDescription();
+        photoImage.material =page.GetPhotoMaterial();
+    }
+
     private void OnEnable()
     {
-        //ChangePage();
+        ChangePage(AlbumManager.Instance.GetCurrentPage());
     }
 }

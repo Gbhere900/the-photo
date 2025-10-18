@@ -40,7 +40,7 @@ public class AlbumPage
     
     public AlbumPageProperty GetAlbumPageProperty() { return albumPageProperty; }
 
-    public Material GetCurrentPhotoMaterial()
+    public Material GetPhotoMaterial()
     {
         return photoMaterial;
     }
