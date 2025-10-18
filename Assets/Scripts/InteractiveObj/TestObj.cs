@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class TestObj : InteractiveObjectBase
 {
-    Renderer renderer;
+    private Renderer renderer;
+    private bool isMaterial1;
     [SerializeField] private Material material1;
     [SerializeField] private Material material2;
 
@@ -16,6 +17,11 @@ public class TestObj : InteractiveObjectBase
         if (renderer != null)
         {
             renderer.material = material1;
+            isMaterial1 = true;
+        }
+        else
+        {
+            isMaterial1 = false;
         }
     }
 
@@ -26,17 +32,22 @@ public class TestObj : InteractiveObjectBase
 
     protected override void PerformInteraction()
     {
+        Debug.Log("PerformInteraction");
         if (renderer == null)
         {
             return;
         }
-        if (renderer.material == material1)
+        if (isMaterial1)
         {
+            Debug.Log("1");
             renderer.material = material2;
+            isMaterial1 = false;
         }
         else
         {
+            Debug.Log("2");
             renderer.material = material1;
+            isMaterial1 = true;
         }
     }
 }

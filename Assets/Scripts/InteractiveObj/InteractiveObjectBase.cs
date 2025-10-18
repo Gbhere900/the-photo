@@ -66,7 +66,7 @@ public abstract class InteractiveObjectBase : MonoBehaviour
     private void CheckPlayerInput()
     {
         // F¼ü½»»¥
-        if (Input.GetKeyDown(KeyCode.F) && CanInteract)
+        if (Input.GetKeyDown(KeyCode.I) && CanInteract)
         {
             Interact();
         }
