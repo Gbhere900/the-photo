@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public enum WorldState
@@ -13,12 +14,16 @@ public enum WorldState
 public class SceneManager : MonoBehaviour
 {
     private static SceneManager instance;
-    
+
     [SerializeField] private WorldState worldState = WorldState.Old;
     [SerializeField] private AudioClip buttonClickedAudioClip;
-    
+
     public Action<WorldState> OnWorldStateChange;
 
+    [SerializeField] private Image targetImage;
+    [SerializeField] private AnimationCurve convertTimeLine;
+    private bool isConverting = false;
+    private float timer = 0;
     public static SceneManager Instance()
     {
 
@@ -28,10 +33,52 @@ public class SceneManager : MonoBehaviour
     {
         instance = this;
 
+     
 
+    }
+
+    private void OnEnable()
+    {
+        OnWorldStateChange += BeginCameraConvert;
         
     }
 
+    private void OnDisable()
+    {
+        OnWorldStateChange -= BeginCameraConvert;
+        
+    }
+
+    private void Update()
+    {
+        if (isConverting)
+        {
+            if (timer <= 1)
+            {
+                timer += Time.deltaTime;
+                float value = convertTimeLine.Evaluate(timer);
+                Material material = targetImage.material;
+                material.SetFloat("_Opacity", value);
+            }
+            else
+            {
+                EndCameraConvert();
+            }
+        }
+    }
+    private void BeginCameraConvert(WorldState worldState)
+    {
+        isConverting = true;
+        timer = 0;
+        
+       
+    }
+
+    private void EndCameraConvert()
+    {
+        isConverting = false;
+        
+    }
 
     public WorldState GetCurrentWorldState()
     {
@@ -40,8 +87,13 @@ public class SceneManager : MonoBehaviour
 
     public void ChangeWorldState(WorldState worldState)
     {
+        WorldState originWorldState = this.worldState;
         this.worldState = worldState;
-        OnWorldStateChange.Invoke(worldState);
+        if (worldState != originWorldState)
+        {
+            OnWorldStateChange.Invoke(worldState);
+        }
+        
     }
 
 
@@ -64,19 +116,19 @@ public class SceneManager : MonoBehaviour
     }
     public void WorldStateChangeToYouth()
     {
-        worldState = WorldState.Youth;
-        OnWorldStateChange.Invoke(WorldState.Youth);
+        ChangeWorldState(WorldState.Youth);
+      
     }
 
     public void WorldStateChangeToAdult()
     {
-        worldState = WorldState.Adult;
-        OnWorldStateChange.Invoke(WorldState.Adult);
+        ChangeWorldState(WorldState.Adult);
+      
     }
     public void WorldStateChangeToOld()
     {
-        worldState = WorldState.Old;
-        OnWorldStateChange.Invoke(WorldState.Old);
+        ChangeWorldState(WorldState.Old);
+      
     }
 
 
