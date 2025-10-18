@@ -25,14 +25,13 @@ public class CameraDetect : MonoBehaviour
     [SerializeField] private RenderTexture renderTexture;
     [SerializeField] private Image targetImage_Camera;
 
-    private Renderer targetRenderer;
-    [SerializeField] private AnimationCurve convertTimeLine;
+    
     //[SerializeField] private RenderTexture renderTexture; // 步骤1创建的渲染纹理
 
     public  bool currentTaskDone = false;
     private void Awake()
     {
-        targetRenderer = targetImage_Camera.GetComponent<Renderer>();
+        
         
     }
 

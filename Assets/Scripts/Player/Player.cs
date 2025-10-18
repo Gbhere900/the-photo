@@ -90,6 +90,7 @@ public class Player : MonoBehaviour
     public void CloseCamera()
     {
         isCameraOn = false;
+        SceneManager.Instance().WorldStateChangeToOld();
         SetCursorState(false);
         cameraDetect.gameObject.SetActive(false);
         buttons.gameObject.SetActive(false);
