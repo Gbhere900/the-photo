@@ -59,6 +59,20 @@ public abstract class InteractiveObjectBase : MonoBehaviour
             isInSight = false;
         }
         
+        // UI按键提示
+        if (CanInteract)
+        {
+            Vector3 screenPosition = mainCamera.WorldToScreenPoint(this.transform.position);
+            InteractiveTooltip.Instance.ShowTooltip("I", name, screenPosition);
+        }
+        else
+        {
+            if (InteractiveTooltip.Instance.GetDescriptionText() == name && InteractiveTooltip.Instance.IsTooltipActive())
+            {
+                InteractiveTooltip.Instance.HideTooltip();   
+            }
+        }
+        
         // 检测玩家输入
         CheckPlayerInput();
     }
@@ -162,8 +176,6 @@ public abstract class InteractiveObjectBase : MonoBehaviour
             Debug.LogError("Can't interact with this object");
             return;
         }
-        
-        // Todo: 交互UI提示逻辑
         
         // 执行具体交互逻辑
         PerformInteraction();
