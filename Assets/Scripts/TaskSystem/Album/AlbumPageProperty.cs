@@ -4,45 +4,50 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "New Album Page", menuName = "TaskSystem/AlbumPageProperty")]
-public class AlbumPageProperty : ScriptableObject
+//[CreateAssetMenu(fileName = "New Album Page", menuName = "TaskSystem/AlbumPageProperty")]
+[Serializable]
+public class AlbumPageProperty 
 {
-    [SerializeField] private int taskIndex;
+    
+    [SerializeField] private string taskId;
     [SerializeField] private string pageDescription;
 
-    public int GetTaskIndex() { return this.taskIndex; }
-    
-    public string GetPageTaskName()
+    public AlbumPageProperty(string taskId, string pageDescription)
     {
-        Task pageTask = TaskSystemManager.Instance.GetTaskByIndex(taskIndex);
-        if (pageTask == null)
-        {
-            return string.Empty;
-        }
-        return pageTask.GetTaskId();
+        this.taskId = taskId;
+        this.pageDescription = pageDescription;
     }
+
+    public string GetTaskId() { return this.taskId; }
+    
+
 
     public string GetPageDescription()
     {
         return pageDescription;
     }
 }
-
+[Serializable]
 public class AlbumPage
 {
     private AlbumPageProperty albumPageProperty;
-    private Image image;
+    private Material photoMaterial;
 
-    public AlbumPage(AlbumPageProperty _albumPageProperty, Image _image)
+    public AlbumPage(AlbumPageProperty _albumPageProperty, Texture2D photoTexture)
     {
         albumPageProperty = _albumPageProperty;
-        image = _image;
+        photoTexture = photoTexture;
     }
 
-    public void SetPhotoImage(Image _image)
+    public void SetPhotoImage(Material photoMaterial)
     {
-        this.image = _image;
+        this.photoMaterial = photoMaterial;
     }
     
     public AlbumPageProperty GetAlbumPageProperty() { return albumPageProperty; }
+
+    public Material GetCurrentPhotoMaterial()
+    {
+        return photoMaterial;
+    }
 }

@@ -2465,7 +2465,7 @@ Transform:
   m_GameObject: {fileID: 1526388795}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.19, z: 0}
+  m_LocalPosition: {x: 0.9, y: 1.19, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3485,6 +3485,7 @@ MonoBehaviour:
   displayMaterial: {fileID: 2100000, guid: 4be430bfeedb55d4aa76d9cfcdc6a973, type: 2}
   renderTexture: {fileID: 8400000, guid: e15a0ccc832ec0a4e8992dc15dacf5f7, type: 2}
   targetImage_Camera: {fileID: 948760230}
+  currentTaskDone: 0
 --- !u!136 &2083676211
 CapsuleCollider:
   m_ObjectHideFlags: 0

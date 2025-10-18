@@ -18,6 +18,7 @@ public class CameraDetect : MonoBehaviour
 
     [SerializeField] private Camera targetCamera; // 要捕获画面的相机（如主相机）
     [SerializeField] private Image targetImage_Photo; // 显示画面的UI图片
+    private Material currentPhotoMaterial;
 
     [SerializeField] private Camera secondaryCamera;
     [SerializeField] private Material displayMaterial;
@@ -25,7 +26,7 @@ public class CameraDetect : MonoBehaviour
     [SerializeField] private Image targetImage_Camera;
     //[SerializeField] private RenderTexture renderTexture; // 步骤1创建的渲染纹理
 
-    private bool currentTaskDone = false;
+    public  bool currentTaskDone = false;
     private void Awake()
     {
 
@@ -221,9 +222,9 @@ public class CameraDetect : MonoBehaviour
         photoTexture.Apply();
 
         RenderTexture.active = null;
-        Material photoMaterial = new Material(Shader.Find("Unlit/Texture"));
-        photoMaterial.mainTexture = photoTexture;
-        targetImage_Photo.material = photoMaterial;
+        currentPhotoMaterial = new Material(Shader.Find("Unlit/Texture"));
+        currentPhotoMaterial.mainTexture = photoTexture;
+        targetImage_Photo.material = currentPhotoMaterial;
 
 
 
@@ -277,6 +278,13 @@ public class CameraDetect : MonoBehaviour
         {
             Debug.LogError("请赋值RenderTexture！");
         }
+
+    }
+
+    public void ResetPhoto()
+    {
+        checkPassUI.gameObject.SetActive(false);
+        currentTaskDone = false;
 
     }
 

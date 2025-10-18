@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
         {
             cameraTransform = transform.Find("MainCamera");
         }
-        //cameraDetect.OutPutToCamera();
+        cameraDetect.OutPutToCamera();
 
         //初始关闭相机
         CloseCamera();
@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        cameraDetect.OutPutToCamera();
+
         // 处理E键切换鼠标状态
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -136,5 +136,10 @@ public class Player : MonoBehaviour
             Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(cameraTransform.position, 0.2f);
         }
+    }
+
+    public CameraDetect GetCameraDetect()
+    {
+        return cameraDetect;
     }
 }
