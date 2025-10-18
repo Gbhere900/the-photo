@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
@@ -5,11 +6,12 @@ using UnityEngine;
 
 public abstract class InteractiveObjectBase : MonoBehaviour
 {
-    [Header("交互距离")]
-    [SerializeField] protected float interactiveDistance;
+    [Header("交互参数")]
+    //[SerializeField] protected float interactiveDistance;
     [SerializeField] protected float cooldownTime;
     [SerializeField] protected bool isHighlight = false;
 
+    private bool isIntersectingWithDetector = false;
     protected float lastInteractTime;
     protected GameObject player;
 
@@ -24,6 +26,7 @@ public abstract class InteractiveObjectBase : MonoBehaviour
     {
         // 设置是否高亮
         isHighlight = CanInteract;
+        
         // 检测玩家输入
         CheckPlayerInput();
     }
@@ -38,7 +41,7 @@ public abstract class InteractiveObjectBase : MonoBehaviour
                 return false;
             }
             // 交互距离判断
-            if (!player || Vector3.Distance(this.transform.position, player.transform.position) > interactiveDistance)
+            if (!player || !isIntersectingWithDetector)
             {
                 return false;
             }
@@ -83,6 +86,8 @@ public abstract class InteractiveObjectBase : MonoBehaviour
             return;
         }
         
+        // Todo: 交互UI提示逻辑
+        
         // 执行具体交互逻辑
         PerformInteraction();
         // 记录交互时间
@@ -93,4 +98,19 @@ public abstract class InteractiveObjectBase : MonoBehaviour
     /// 具体交互逻辑
     /// </summary>
     protected abstract void PerformInteraction();
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "InteractiveDetect")
+        {
+            isIntersectingWithDetector = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "InteractiveDetect")
+        {
+            isIntersectingWithDetector = false;
+        }
+    }
 }

@@ -24,12 +24,15 @@ public class CameraDetect : MonoBehaviour
     [SerializeField] private Material displayMaterial;
     [SerializeField] private RenderTexture renderTexture;
     [SerializeField] private Image targetImage_Camera;
+
+    private Renderer targetRenderer;
+    [SerializeField] private AnimationCurve convertTimeLine;
     //[SerializeField] private RenderTexture renderTexture; // 步骤1创建的渲染纹理
 
     public  bool currentTaskDone = false;
     private void Awake()
     {
-
+        targetRenderer = targetImage_Camera.GetComponent<Renderer>();
         
     }
 
@@ -179,6 +182,7 @@ public class CameraDetect : MonoBehaviour
 
     public void OutputToPhoto()
     {
+        Tagofphoto.Instance.settrue();
         StartCoroutine(OutputToPhotoIEnumerator());
 
         if (CheckTaskItemInTrigger())
@@ -197,8 +201,7 @@ public class CameraDetect : MonoBehaviour
     public IEnumerator OutputToPhotoIEnumerator()
     {
 
-        // 初始化：设置相机的目标渲染纹理
-        yield return null;
+        //float timer
 
       
         RenderTexture tempRenderTexture = new RenderTexture(Screen.width, Screen.height, 24);
@@ -224,6 +227,7 @@ public class CameraDetect : MonoBehaviour
         RenderTexture.active = null;
         currentPhotoMaterial = new Material(Shader.Find("Unlit/Texture"));
         currentPhotoMaterial.mainTexture = photoTexture;
+        
         targetImage_Photo.material = currentPhotoMaterial;
 
 
