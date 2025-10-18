@@ -25,6 +25,10 @@ public class AlbumUI : MonoBehaviour
 
     private void OnEnable()
     {
-        ChangePage(AlbumManager.Instance.GetCurrentPage());
+        if (!AlbumManager.Instance.IsPagesEmpty())
+        {
+            ChangePage(AlbumManager.Instance.GetCurrentPage());
+        }
+
     }
 }

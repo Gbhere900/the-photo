@@ -119,4 +119,9 @@ public class AlbumManager : SingletonMonoBase<AlbumManager>
     {
         return pages[currentPageIndex];
     }
+
+    public bool IsPagesEmpty()
+    {
+        return pages.Count == 0;
+    }
 }
