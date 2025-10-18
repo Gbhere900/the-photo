@@ -2,11 +2,9 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-//[CreateAssetMenu(fileName = "New Album Page", menuName = "TaskSystem/AlbumPageProperty")]
 [Serializable]
 public class AlbumPageProperty 
 {
-    
     [SerializeField] private string taskId;
     [SerializeField] private string pageDescription;
 
@@ -18,8 +16,6 @@ public class AlbumPageProperty
 
     public string GetTaskId() { return this.taskId; }
     
-
-
     public string GetPageDescription()
     {
         return pageDescription;
