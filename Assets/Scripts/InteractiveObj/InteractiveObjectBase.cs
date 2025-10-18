@@ -67,6 +67,14 @@ public abstract class InteractiveObjectBase : MonoBehaviour
     {
         get
         {
+            if (player)
+            {
+                Player playerScript = player.GetComponent<Player>();
+                if (playerScript && playerScript.GetIsCameraOn())
+                {
+                    return false;
+                }
+            }
             // ½»»¥ÀäÈ´Ê±¼äÅÐ¶Ï
             if (cooldownTime > 0 && Time.time < lastInteractTime + cooldownTime)
             {

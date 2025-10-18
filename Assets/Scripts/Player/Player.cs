@@ -172,4 +172,9 @@ public class Player : MonoBehaviour
     {
         return cameraDetect;
     }
+
+    public bool GetIsCameraOn()
+    {
+        return isCameraOn;
+    }
 }
