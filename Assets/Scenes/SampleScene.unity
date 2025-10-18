@@ -587,7 +587,7 @@ GameObject:
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
   - component: {fileID: 330585548}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -770,8 +770,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  shakeFrequency: 2
-  shakeIntensity: 0.5
+  shakeFrequency: 1.2
+  xShakeIntensity: 0.4
+  yShakeIntensity: 0.2
   cameraTransform: {fileID: 330585546}
 --- !u!1 &395080509
 GameObject:
@@ -1362,7 +1363,7 @@ GameObject:
   - component: {fileID: 661443405}
   - component: {fileID: 661443408}
   - component: {fileID: 661443406}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: 3DUICamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1677,7 +1678,7 @@ GameObject:
   - component: {fileID: 717699284}
   - component: {fileID: 717699283}
   - component: {fileID: 717699286}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1770,6 +1771,7 @@ MonoBehaviour:
   cameraDetect: {fileID: 2083676210}
   cameraShake: {fileID: 330585548}
   buttons: {fileID: 51206333}
+  squatDownOffset: {x: 0, y: -0.7, z: 0}
   cameraAnimator: {fileID: 1375361761}
 --- !u!1 &892317746
 GameObject:
@@ -2654,7 +2656,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 7349138815764366620}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1320715119}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a44b5a88eaee15941a2c2b89320f8504, type: 3}
@@ -2793,6 +2795,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1279400796}
   m_CullTransparentMesh: 1
+--- !u!1 &1320715119 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 156614356065086516, guid: 25fad81393e4ad845b52866e14c02525,
+    type: 3}
+  m_PrefabInstance: {fileID: 7349138815764366620}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1320715122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320715119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 5.23
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &1333101091
 GameObject:
   m_ObjectHideFlags: 0
@@ -2959,7 +2985,7 @@ GameObject:
   - component: {fileID: 1387663891}
   - component: {fileID: 1387663893}
   - component: {fileID: 1387663892}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PhotoCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -4675,7 +4701,7 @@ GameObject:
   - component: {fileID: 2083676209}
   - component: {fileID: 2083676211}
   - component: {fileID: 2083676210}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CameraDetection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4710,7 +4736,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectAudio: {fileID: 0}
-  detectUI: {fileID: 982450841}
   checkPassUI: {fileID: 1833401246}
   targetCamera: {fileID: 1387663893}
   targetImage_Photo: {fileID: 162064398}
@@ -4719,6 +4744,7 @@ MonoBehaviour:
   displayMaterial: {fileID: 2100000, guid: 4be430bfeedb55d4aa76d9cfcdc6a973, type: 2}
   renderTexture: {fileID: 8400000, guid: e15a0ccc832ec0a4e8992dc15dacf5f7, type: 2}
   targetImage_Camera: {fileID: 948760230}
+  quickOutline: {fileID: 0}
   currentTaskDone: 0
 --- !u!136 &2083676211
 CapsuleCollider:
@@ -4887,7 +4913,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 156614356065086516, guid: 25fad81393e4ad845b52866e14c02525,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1320715122}
   m_SourcePrefab: {fileID: 100100000, guid: 25fad81393e4ad845b52866e14c02525, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

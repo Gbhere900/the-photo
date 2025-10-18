@@ -9,10 +9,10 @@ public class CameraDetect : MonoBehaviour
 {
 
     [SerializeField] private AudioClip detectAudio;
-    [SerializeField] private Transform detectUI;
+    //[SerializeField] private Transform detectUI;
     [SerializeField] private Transform checkPassUI;
 
-   //[SerializeField] private TaskItem requestTaskItem;
+    //[SerializeField] private TaskItem requestTaskItem;
     private CapsuleCollider triggerCollider; // 胶囊体触发器
 
 
@@ -25,8 +25,8 @@ public class CameraDetect : MonoBehaviour
     [SerializeField] private RenderTexture renderTexture;
     [SerializeField] private Image targetImage_Camera;
 
+    [SerializeField] private QuickOutline quickOutline;
     
-    //[SerializeField] private RenderTexture renderTexture; // 步骤1创建的渲染纹理
 
     public  bool currentTaskDone = false;
     private void Awake()
@@ -40,7 +40,8 @@ public class CameraDetect : MonoBehaviour
         SceneManager.Instance().OnWorldStateChange += ResetDetectUI;
         if (CheckTaskItemInTrigger())
         {
-            detectUI.gameObject.SetActive(true);
+            quickOutline.enabled = true;
+           // detectUI.gameObject.SetActive(true);
             //TODO: 播放音效
         }
 
@@ -48,10 +49,14 @@ public class CameraDetect : MonoBehaviour
     }
     private void OnDisable()
     {
-        if (detectUI)
+        if (quickOutline)
         {
-            detectUI.gameObject.SetActive(false);
+            quickOutline.enabled = false;
         }
+        //if (detectUI)
+        //{
+        //    detectUI.gameObject.SetActive(false);
+        //}
 
         
         SceneManager.Instance().OnWorldStateChange -= ResetDetectUI;
@@ -126,6 +131,7 @@ public class CameraDetect : MonoBehaviour
                     
                     if (taskItem == TaskSystemManager.Instance.GetCurrentTask().GetTaskItem())
                     {
+                        quickOutline = taskItem.GetComponent<QuickOutline>();
                         return true;
 
                     }
@@ -171,11 +177,18 @@ public class CameraDetect : MonoBehaviour
 
     private void ResetDetectUI(WorldState worldState)
     {
-        detectUI.gameObject.SetActive(false);
+        //detectUI.gameObject.SetActive(false);
+        if (quickOutline!= null)
+        {
+            quickOutline.enabled = false;
+        }
+       
         if (CheckTaskItemInTrigger())
         {
-            detectUI.gameObject.SetActive(true);
+            //detectUI.gameObject.SetActive(true);
             // 显示UI
+
+            quickOutline.enabled = true;
         }
     }
 
@@ -201,7 +214,7 @@ public class CameraDetect : MonoBehaviour
     {
 
         //float timer
-
+        quickOutline.enabled = false;
       
         RenderTexture tempRenderTexture = new RenderTexture(Screen.width, Screen.height, 24);
         targetCamera.targetTexture = tempRenderTexture;
@@ -238,8 +251,8 @@ public class CameraDetect : MonoBehaviour
 
         targetCamera.targetTexture = null;
         secondaryCamera.targetTexture = renderTexture;
-       
 
+        quickOutline.enabled = true;
     }
 
     private void OnDestroy()
