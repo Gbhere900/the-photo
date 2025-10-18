@@ -2945,6 +2945,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39a6da7981bcf6d4f90c29ffb4e4121a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pages: []
+  albumUI: {fileID: 0}
 --- !u!1 &1375361757 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 89176ac1077e625488b376c1afe96dd9,
