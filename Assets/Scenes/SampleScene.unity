@@ -2666,9 +2666,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pages: []
-  albumCanvas: {fileID: 1407280304}
-  photoImage: {fileID: 1872351999}
-  description: {fileID: 1694018092}
+  albumUI: {fileID: 0}
 --- !u!1 &1375361757 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 89176ac1077e625488b376c1afe96dd9,
@@ -2842,6 +2840,7 @@ GameObject:
   - component: {fileID: 1407280307}
   - component: {fileID: 1407280306}
   - component: {fileID: 1407280305}
+  - component: {fileID: 1407280308}
   m_Layer: 5
   m_Name: AlbumCanvas
   m_TagString: Untagged
@@ -2935,6 +2934,20 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1407280308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407280303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82616df8ddfa839489bb39625b96044a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  photoImage: {fileID: 0}
+  description: {fileID: 0}
 --- !u!1 &1505675026
 GameObject:
   m_ObjectHideFlags: 0
@@ -4456,6 +4469,7 @@ MonoBehaviour:
   checkPassUI: {fileID: 1833401246}
   targetCamera: {fileID: 1387663893}
   targetImage_Photo: {fileID: 162064398}
+  currentPhotoMaterial: {fileID: 0}
   secondaryCamera: {fileID: 1387663893}
   displayMaterial: {fileID: 2100000, guid: 4be430bfeedb55d4aa76d9cfcdc6a973, type: 2}
   renderTexture: {fileID: 8400000, guid: e15a0ccc832ec0a4e8992dc15dacf5f7, type: 2}

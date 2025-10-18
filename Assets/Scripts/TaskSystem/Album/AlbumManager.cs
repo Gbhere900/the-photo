@@ -11,9 +11,8 @@ public class AlbumManager : SingletonMonoBase<AlbumManager>
     [Header("相片列表")]
     // [SerializeField] private List<AlbumPageProperty> pageProperties = new List<AlbumPageProperty>();
     [SerializeField] private List<AlbumPage> pages;
-    [SerializeField] private Transform albumCanvas;
-    [SerializeField] private Image photoImage;
-    [SerializeField] private TextMeshProUGUI description;
+    [SerializeField] private AlbumUI albumUI;
+
 
     private int currentPageIndex = 0;
 
@@ -21,14 +20,16 @@ public class AlbumManager : SingletonMonoBase<AlbumManager>
     {
         base.Awake();
         Initialized();
-        //ShowPage();
-        //ChangePage(currentPageIndex);
+        
+        
     }
+
 
     private void Initialized()
     {
         pages = new List<AlbumPage>(10);
-       // ChangePage(currentPageIndex);
+        //ShowPage();
+        ChangePage(currentPageIndex);
     }
 
     private AlbumPage GetPageByIndex(int taskIndex)
@@ -57,28 +58,36 @@ public class AlbumManager : SingletonMonoBase<AlbumManager>
         return null;
     }
 
-    public void InsertPage(string taskId, string pageDescription, Texture2D photoTexture, int index)
+    private void InsertPage(string taskId, string pageDescription, Material photoMaterial, int index)
     {
         AlbumPageProperty albumPageProperty = new AlbumPageProperty(taskId, pageDescription);
-        AlbumPage page = new AlbumPage(albumPageProperty, photoTexture);
+        AlbumPage page = new AlbumPage(albumPageProperty, photoMaterial);
         pages[index] = page;
     }
-
+    public void AddPage(string taskId, string pageDescription, Material photoMaterial)
+    {
+        AlbumPageProperty albumPageProperty = new AlbumPageProperty(taskId, pageDescription);
+        AlbumPage page = new AlbumPage(albumPageProperty, photoMaterial);
+        pages.Add(page);
+    }
     public void ShowPage()
     {
 
-        albumCanvas.gameObject.SetActive(true);
+        albumUI.gameObject.SetActive(true);
     }
     public void ChangePage(int index)
     {
-        description.text = GetPageByIndex(index).GetAlbumPageProperty().GetPageDescription();
-
-        photoImage.material = GetPageByIndex(index).GetCurrentPhotoMaterial();
+        if (index >= pages.Count)
+        {
+            Debug.LogWarning("超出索引范围，无法更改到目标页面");
+            return ; 
+        }
+        albumUI.ChangePage(pages[index].GetAlbumPageProperty().GetPageDescription(), pages[index].GetCurrentPhotoMaterial());
     }
 
     public void HidePage()
     {
-        albumCanvas.gameObject.SetActive(false);
+        albumUI.gameObject.SetActive(false);
     }
 
     public void OnNextPageButtonDown()
