@@ -484,7 +484,7 @@ GameObject:
   - component: {fileID: 234020259}
   - component: {fileID: 234020258}
   - component: {fileID: 234020257}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -587,7 +587,7 @@ GameObject:
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
   - component: {fileID: 330585548}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -668,6 +668,7 @@ Transform:
   m_Children:
   - {fileID: 1387663891}
   - {fileID: 2083676209}
+  - {fileID: 972587189}
   - {fileID: 1375361758}
   m_Father: {fileID: 717699285}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1500,7 +1501,7 @@ GameObject:
   - component: {fileID: 717699284}
   - component: {fileID: 717699283}
   - component: {fileID: 717699286}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1607,6 +1608,7 @@ GameObject:
   - component: {fileID: 860766055}
   - component: {fileID: 860766054}
   - component: {fileID: 860766053}
+  - component: {fileID: 860766058}
   m_Layer: 0
   m_Name: Drawer
   m_TagString: Untagged
@@ -1627,8 +1629,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactiveDistance: 3
-  cooldownTime: 1
+  cooldownTime: 0.5
   isHighlight: 0
+  outlineWidth: 10
   moveDirection: {x: 0, y: 0, z: 1}
   moveDistance: 2
   moveSpeed: 2
@@ -1712,12 +1715,30 @@ Transform:
   m_GameObject: {fileID: 860766052}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.59, y: -0.011, z: 0}
+  m_LocalPosition: {x: 2.02, y: -0.011, z: -1.49}
   m_LocalScale: {x: 1, y: 0.41008028, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &860766058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860766052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &892317746
 GameObject:
   m_ObjectHideFlags: 0
@@ -2280,7 +2301,7 @@ GameObject:
   - component: {fileID: 948760232}
   - component: {fileID: 948760231}
   - component: {fileID: 948760230}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: CameraImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2344,6 +2365,59 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &972587188
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 972587189}
+  - component: {fileID: 972587190}
+  m_Layer: 3
+  m_Name: InteractiveDetection
+  m_TagString: InteractiveDetect
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &972587189
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 972587188}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 4}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 330585546}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &972587190
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 972587188}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0.5}
 --- !u!224 &982450841 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8709452024194843991, guid: 48ddad10cc2a3e441b740d71b6def2fd,
@@ -2602,6 +2676,7 @@ GameObject:
   - component: {fileID: 1240364347}
   - component: {fileID: 1240364346}
   - component: {fileID: 1240364345}
+  - component: {fileID: 1240364350}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -2624,6 +2699,7 @@ MonoBehaviour:
   interactiveDistance: 3
   cooldownTime: 0.3
   isHighlight: 0
+  outlineWidth: 10
   rotatePivot: {fileID: 421001358}
   rotateAngle: 90
   rotateSpeed: 90
@@ -2714,6 +2790,24 @@ Transform:
   - {fileID: 421001358}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1240364350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240364344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!4 &1263845551 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6744544483645362867, guid: 25fad81393e4ad845b52866e14c02525,
@@ -3031,7 +3125,7 @@ GameObject:
   - component: {fileID: 1387663891}
   - component: {fileID: 1387663893}
   - component: {fileID: 1387663892}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PhotoCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -4552,7 +4646,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 89176ac1077e625488b376c1afe96dd9,
         type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4746,7 +4840,7 @@ GameObject:
   - component: {fileID: 2083676209}
   - component: {fileID: 2083676211}
   - component: {fileID: 2083676210}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CameraDetection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4790,6 +4884,12 @@ MonoBehaviour:
   displayMaterial: {fileID: 2100000, guid: 4be430bfeedb55d4aa76d9cfcdc6a973, type: 2}
   renderTexture: {fileID: 8400000, guid: e15a0ccc832ec0a4e8992dc15dacf5f7, type: 2}
   targetImage_Camera: {fileID: 948760230}
+  convertTimeLine:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   currentTaskDone: 0
 --- !u!136 &2083676211
 CapsuleCollider:

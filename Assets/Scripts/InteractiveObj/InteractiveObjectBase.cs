@@ -9,20 +9,23 @@ using UnityEngine.UI;
 public abstract class InteractiveObjectBase : MonoBehaviour
 {
     [Header("交互参数")]
-    //[SerializeField] protected float interactiveDistance;
+    [SerializeField] protected float interactiveDistance;
     [SerializeField] protected float cooldownTime;
     [SerializeField] protected bool isHighlight = false;
     [SerializeField] protected float outlineWidth = 10f;
 
     private bool isIntersectingWithDetector = false;
+    private bool isInSight = false;
     protected float lastInteractTime;
     protected GameObject player;
+    protected Camera mainCamera;
 
     private QuickOutline outline;
     
     protected virtual void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         
         Initialized();
     }
@@ -43,6 +46,16 @@ public abstract class InteractiveObjectBase : MonoBehaviour
             }
         }
         
+        // 射线检测
+        if (isIntersectingWithDetector)
+        {
+            RayDetect();
+        }
+        else
+        {
+            isInSight = false;
+        }
+        
         // 检测玩家输入
         CheckPlayerInput();
     }
@@ -61,10 +74,39 @@ public abstract class InteractiveObjectBase : MonoBehaviour
             {
                 return false;
             }
+            // 射线检测
+            if (!isInSight)
+            {
+                return false;
+            }
+            
             return IsInteractionPossible();
         }
     }
 
+    private void RayDetect()
+    {
+        Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
+        RaycastHit hit;
+        
+        int playerLayer = LayerMask.NameToLayer("Player");
+        LayerMask layerMask = ~(1 << playerLayer);
+        bool isHit = Physics.Raycast(ray, out hit, interactiveDistance, layerMask);
+        // 若击中物体
+        if (isHit)
+        {
+            // 判断被击中的是否是可交互物体本身
+            if (hit.collider.gameObject == gameObject || hit.collider.transform.IsChildOf(transform))
+            {
+                isInSight = true;
+            }
+            else
+            {
+                isInSight = false;
+            }
+        }
+    }
+    
     /// <summary>
     /// 判断交互是否可行
     /// </summary>
