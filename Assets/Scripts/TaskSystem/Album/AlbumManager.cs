@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class AlbumManager : SingletonMonoBase<AlbumManager>
 {
-    [Header("ÏàÆ¬ÁĞ±í")]
+    [Header("ç›¸ç‰‡åˆ—è¡¨")]
     // [SerializeField] private List<AlbumPageProperty> pageProperties = new List<AlbumPageProperty>();
     [SerializeField] private List<AlbumPage> pages;
     [SerializeField] private AlbumUI albumUI;
@@ -36,7 +36,7 @@ public class AlbumManager : SingletonMonoBase<AlbumManager>
     {
         if (taskIndex >= pages.Count)
         {
-            Debug.LogWarning("Index³¬¹ıÏà²áÈİÁ¿£¬·µ»Ønull");
+            Debug.LogWarning("Indexè¶…è¿‡ç›¸å†Œå®¹é‡ï¼Œè¿”å›null");
             return null;
 
         }
@@ -54,7 +54,7 @@ public class AlbumManager : SingletonMonoBase<AlbumManager>
                 return page;
             }
         }
-        Debug.LogWarning("Î´ÕÒµ½idÎª" + taskId + ",·µ»Ønull");
+        Debug.LogWarning("æœªæ‰¾åˆ°idä¸º" + taskId + ",è¿”å›null");
         return null;
     }
 
@@ -79,7 +79,7 @@ public class AlbumManager : SingletonMonoBase<AlbumManager>
     {
         if (index >= pages.Count)
         {
-            Debug.LogWarning("³¬³öË÷Òı·¶Î§£¬ÎŞ·¨¸ü¸Äµ½Ä¿±êÒ³Ãæ");
+            Debug.LogWarning("è¶…å‡ºç´¢å¼•èŒƒå›´ï¼Œæ— æ³•æ›´æ”¹åˆ°ç›®æ ‡é¡µé¢");
             return ; 
         }
         albumUI.ChangePage(pages[index].GetAlbumPageProperty().GetPageDescription(), pages[index].GetPhotoMaterial());
