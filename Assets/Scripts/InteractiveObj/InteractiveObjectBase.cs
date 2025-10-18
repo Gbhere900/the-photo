@@ -89,7 +89,7 @@ public abstract class InteractiveObjectBase : MonoBehaviour
         Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
         RaycastHit hit;
         
-        int playerLayer = LayerMask.NameToLayer("Player");
+        int playerLayer = LayerMask.NameToLayer("CameraModel");
         LayerMask layerMask = ~(1 << playerLayer);
         bool isHit = Physics.Raycast(ray, out hit, interactiveDistance, layerMask);
         // Èô»÷ÖÐÎïÌå
