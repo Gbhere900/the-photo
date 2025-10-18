@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private CameraDetect cameraDetect;
     [SerializeField] private CameraShake cameraShake;
+    [SerializeField] private Transform buttons;
 
     [SerializeField] private Animator cameraAnimator;
 
@@ -80,7 +81,7 @@ public class Player : MonoBehaviour
         isCameraOn = true;
         SetCursorState(true);
         cameraDetect.gameObject.SetActive(true);
-
+        buttons.gameObject.SetActive(true);
         cameraAnimator.SetBool("isCameraOn", true);
         cameraShake.StopShake();
         //TODO:播放相机动画
@@ -91,7 +92,7 @@ public class Player : MonoBehaviour
         isCameraOn = false;
         SetCursorState(false);
         cameraDetect.gameObject.SetActive(false);
-
+        buttons.gameObject.SetActive(false);
         cameraAnimator.SetBool("isCameraOn",false);
         //TODO:播放相机动画
     }
