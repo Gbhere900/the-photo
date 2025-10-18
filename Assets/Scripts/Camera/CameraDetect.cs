@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -12,12 +12,12 @@ public class CameraDetect : MonoBehaviour
     //[SerializeField] private Transform detectUI;
     [SerializeField] private Transform checkPassUI;
 
-    //[SerializeField] private TaskItem requestTaskItem;
-    private CapsuleCollider triggerCollider; // ½ºÄÒÌå´¥·¢Æ÷
+   //[SerializeField] private TaskItem requestTaskItem;
+    private CapsuleCollider triggerCollider; // èƒ¶å›Šä½“è§¦å‘å™¨
 
 
-    [SerializeField] private Camera targetCamera; // Òª²¶»ñ»­ÃæµÄÏà»ú£¨ÈçÖ÷Ïà»ú£©
-    [SerializeField] private Image targetImage_Photo; // ÏÔÊ¾»­ÃæµÄUIÍ¼Æ¬
+    [SerializeField] private Camera targetCamera; // è¦æ•è·ç”»é¢çš„ç›¸æœºï¼ˆå¦‚ä¸»ç›¸æœºï¼‰
+    [SerializeField] private Image targetImage_Photo; // æ˜¾ç¤ºç”»é¢çš„UIå›¾ç‰‡
     public  Material currentPhotoMaterial;
 
     [SerializeField] private Camera secondaryCamera;
@@ -42,7 +42,7 @@ public class CameraDetect : MonoBehaviour
         {
             quickOutline.enabled = true;
            // detectUI.gameObject.SetActive(true);
-            //TODO: ²¥·ÅÒôĞ§
+            //TODO: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ§
         }
 
 
@@ -65,33 +65,33 @@ public class CameraDetect : MonoBehaviour
     //private void CheckTrigger()
     //{
     //    triggerCollider = GetComponent<CapsuleCollider>();
-    //    Vector3 center = transform.TransformPoint(triggerCollider.center); // ½ºÄÒÌåÖĞĞÄ£¨ÊÀ½ç×ø±ê£©
-    //    float height = triggerCollider.height; // ½ºÄÒÌå¸ß¶È£¨°üº¬Á½¸ö°ëÇò£©
-    //    float radius = triggerCollider.radius; // ½ºÄÒÌå°ë¾¶
+    //    Vector3 center = transform.TransformPoint(triggerCollider.center); // èƒ¶å›Šä½“ä¸­å¿ƒï¼ˆä¸–ç•Œåæ ‡ï¼‰
+    //    float height = triggerCollider.height; // èƒ¶å›Šä½“é«˜åº¦ï¼ˆåŒ…å«ä¸¤ä¸ªåŠçƒï¼‰
+    //    float radius = triggerCollider.radius; // èƒ¶å›Šä½“åŠå¾„
 
-    //    // ½ºÄÒÌåµÄÖáÏò£¨CapsuleColliderÄ¬ÈÏYÖá£¬¿ÉÍ¨¹ıdirectionĞŞ¸Ä£º0=X£¬1=Y£¬2=Z£©
-    //    Vector3 axis = Vector3.up; // Ä¬ÈÏYÖá
+    //    // èƒ¶å›Šä½“çš„è½´å‘ï¼ˆCapsuleCollideré»˜è®¤Yè½´ï¼Œå¯é€šè¿‡directionä¿®æ”¹ï¼š0=Xï¼Œ1=Yï¼Œ2=Zï¼‰
+    //    Vector3 axis = Vector3.up; // é»˜è®¤Yè½´
     //    if (triggerCollider.direction == 0) axis = Vector3.right;
     //    else if (triggerCollider.direction == 2) axis = Vector3.forward;
 
-    //    // ¼ÆËã½ºÄÒÌåµÄÁ½¸ö¶Ëµã£¨ÊÀ½ç×ø±ê£©
-    //    Vector3 point1 = center + axis * (height / 2 - radius); // ÉÏ¶Ëµã
-    //    Vector3 point2 = center - axis * (height / 2 - radius); // ÏÂ¶Ëµã
+    //    // è®¡ç®—èƒ¶å›Šä½“çš„ä¸¤ä¸ªç«¯ç‚¹ï¼ˆä¸–ç•Œåæ ‡ï¼‰
+    //    Vector3 point1 = center + axis * (height / 2 - radius); // ä¸Šç«¯ç‚¹
+    //    Vector3 point2 = center - axis * (height / 2 - radius); // ä¸‹ç«¯ç‚¹
 
-    //    // ÊÖ¶¯¼ì²â½ºÄÒÌåÄÚµÄËùÓĞÅö×²Ìå
+    //    // æ‰‹åŠ¨æ£€æµ‹èƒ¶å›Šä½“å†…çš„æ‰€æœ‰ç¢°æ’ä½“
     //    Collider[] overlappedColliders = Physics.OverlapCapsule(
-    //        point1,       // ½ºÄÒÌåÉÏ¶Ëµã
-    //        point2,       // ½ºÄÒÌåÏÂ¶Ëµã
-    //        radius,       // ½ºÄÒÌå°ë¾¶
-    //        ~0            // ¼ì²âËùÓĞ²ã¼¶£¨¿É×Ô¶¨Òå²ã¼¶ÑÚÂë£©
+    //        point1,       // èƒ¶å›Šä½“ä¸Šç«¯ç‚¹
+    //        point2,       // èƒ¶å›Šä½“ä¸‹ç«¯ç‚¹
+    //        radius,       // èƒ¶å›Šä½“åŠå¾„
+    //        ~0            // æ£€æµ‹æ‰€æœ‰å±‚çº§ï¼ˆå¯è‡ªå®šä¹‰å±‚çº§æ©ç ï¼‰
     //    );
 
-    //    // ±éÀú¼ì²âµ½µÄÅö×²Ìå£¬Ä£Äâ´¥·¢OnTriggerEnter
+    //    // éå†æ£€æµ‹åˆ°çš„ç¢°æ’ä½“ï¼Œæ¨¡æ‹Ÿè§¦å‘OnTriggerEnter
     //    foreach (var col in overlappedColliders)
     //    {
-    //        if (col != triggerCollider) // ÅÅ³ı×ÔÉíÅö×²Ìå
+    //        if (col != triggerCollider) // æ’é™¤è‡ªèº«ç¢°æ’ä½“
     //        {
-    //            OnTriggerEnter(col); // µ÷ÓÃ´¥·¢Âß¼­
+    //            OnTriggerEnter(col); // è°ƒç”¨è§¦å‘é€»è¾‘
     //        }
     //    }
     //}
@@ -99,31 +99,31 @@ public class CameraDetect : MonoBehaviour
     private bool CheckTaskItemInTrigger()
     {
         triggerCollider = GetComponent<CapsuleCollider>();
-        Vector3 center = transform.TransformPoint(triggerCollider.center); // ½ºÄÒÌåÖĞĞÄ£¨ÊÀ½ç×ø±ê£©
-        float height = triggerCollider.height; // ½ºÄÒÌå¸ß¶È£¨°üº¬Á½¸ö°ëÇò£©
-        float radius = triggerCollider.radius; // ½ºÄÒÌå°ë¾¶
+        Vector3 center = transform.TransformPoint(triggerCollider.center); // èƒ¶å›Šä½“ä¸­å¿ƒï¼ˆä¸–ç•Œåæ ‡ï¼‰
+        float height = triggerCollider.height; // èƒ¶å›Šä½“é«˜åº¦ï¼ˆåŒ…å«ä¸¤ä¸ªåŠçƒï¼‰
+        float radius = triggerCollider.radius; // èƒ¶å›Šä½“åŠå¾„
 
-        // ½ºÄÒÌåµÄÖáÏò£¨CapsuleColliderÄ¬ÈÏYÖá£¬¿ÉÍ¨¹ıdirectionĞŞ¸Ä£º0=X£¬1=Y£¬2=Z£©
-        Vector3 axis = Vector3.up; // Ä¬ÈÏYÖá
+        // èƒ¶å›Šä½“çš„è½´å‘ï¼ˆCapsuleCollideré»˜è®¤Yè½´ï¼Œå¯é€šè¿‡directionä¿®æ”¹ï¼š0=Xï¼Œ1=Yï¼Œ2=Zï¼‰
+        Vector3 axis = Vector3.up; // é»˜è®¤Yè½´
         if (triggerCollider.direction == 0) axis = Vector3.right;
         else if (triggerCollider.direction == 2) axis = Vector3.forward;
 
-        // ¼ÆËã½ºÄÒÌåµÄÁ½¸ö¶Ëµã£¨ÊÀ½ç×ø±ê£©
-        Vector3 point1 = center + axis * (height / 2 - radius); // ÉÏ¶Ëµã
-        Vector3 point2 = center - axis * (height / 2 - radius); // ÏÂ¶Ëµã
+        // è®¡ç®—èƒ¶å›Šä½“çš„ä¸¤ä¸ªç«¯ç‚¹ï¼ˆä¸–ç•Œåæ ‡ï¼‰
+        Vector3 point1 = center + axis * (height / 2 - radius); // ä¸Šç«¯ç‚¹
+        Vector3 point2 = center - axis * (height / 2 - radius); // ä¸‹ç«¯ç‚¹
 
-        // ÊÖ¶¯¼ì²â½ºÄÒÌåÄÚµÄËùÓĞÅö×²Ìå
+        // æ‰‹åŠ¨æ£€æµ‹èƒ¶å›Šä½“å†…çš„æ‰€æœ‰ç¢°æ’ä½“
         Collider[] overlappedColliders = Physics.OverlapCapsule(
-            point1,       // ½ºÄÒÌåÉÏ¶Ëµã
-            point2,       // ½ºÄÒÌåÏÂ¶Ëµã
-            radius,       // ½ºÄÒÌå°ë¾¶
-            ~0            // ¼ì²âËùÓĞ²ã¼¶£¨¿É×Ô¶¨Òå²ã¼¶ÑÚÂë£©
+            point1,       // èƒ¶å›Šä½“ä¸Šç«¯ç‚¹
+            point2,       // èƒ¶å›Šä½“ä¸‹ç«¯ç‚¹
+            radius,       // èƒ¶å›Šä½“åŠå¾„
+            ~0            // æ£€æµ‹æ‰€æœ‰å±‚çº§ï¼ˆå¯è‡ªå®šä¹‰å±‚çº§æ©ç ï¼‰
         );
 
-        // ±éÀú¼ì²âµ½µÄÅö×²Ìå£¬Ä£Äâ´¥·¢OnTriggerEnter
+        // éå†æ£€æµ‹åˆ°çš„ç¢°æ’ä½“ï¼Œæ¨¡æ‹Ÿè§¦å‘OnTriggerEnter
         foreach (var col in overlappedColliders)
         {
-            if (col != triggerCollider) // ÅÅ³ı×ÔÉíÅö×²Ìå
+            if (col != triggerCollider) // æ’é™¤è‡ªèº«ç¢°æ’ä½“
             {
                 TaskItem taskItem;
                 if (col.TryGetComponent<TaskItem>(out taskItem))
@@ -151,11 +151,11 @@ public class CameraDetect : MonoBehaviour
     //        if (taskItem == requestTaskItem)
     //        {
     //            Debug.Log("Detected" + other.gameObject.name);
-    //            // ÏÔÊ¾UI
+    //            // æ˜¾ç¤ºUI
 
 
     //            detectUIPrefab.gameObject.SetActive(true);
-    //            //TODO: ²¥·ÅÒôĞ§£¬UI
+    //            //TODO: æ’­æ”¾éŸ³æ•ˆï¼ŒUI
     //        }
 
     //    }
@@ -185,10 +185,15 @@ public class CameraDetect : MonoBehaviour
        
         if (CheckTaskItemInTrigger())
         {
+<<<<<<< Updated upstream
             //detectUI.gameObject.SetActive(true);
-            // ÏÔÊ¾UI
+            // ï¿½ï¿½Ê¾UI
 
             quickOutline.enabled = true;
+=======
+            detectUI.gameObject.SetActive(true);
+            // æ˜¾ç¤ºUI
+>>>>>>> Stashed changes
         }
     }
 
@@ -201,13 +206,13 @@ public class CameraDetect : MonoBehaviour
         {
             checkPassUI.gameObject.SetActive(true);
             currentTaskDone = true;
-            //TODO: ²¥·ÅÒôĞ§£¬UI
+            //TODO: æ’­æ”¾éŸ³æ•ˆï¼ŒUI
         }
         else
         {
             checkPassUI.gameObject.SetActive(false);
             currentTaskDone = false;
-            //TODO: ²¥·ÅÒôĞ§£¬UI
+            //TODO: æ’­æ”¾éŸ³æ•ˆï¼ŒUI
         }
     }
     public IEnumerator OutputToPhotoIEnumerator()
@@ -244,7 +249,7 @@ public class CameraDetect : MonoBehaviour
 
 
 
-        //// ´´½¨Ò»¸öÊ¹ÓÃ¸ÃäÖÈ¾ÎÆÀíµÄ²ÄÖÊ£¬²¢¸³Öµ¸øUIÍ¼Æ¬
+        //// åˆ›å»ºä¸€ä¸ªä½¿ç”¨è¯¥æ¸²æŸ“çº¹ç†çš„æè´¨ï¼Œå¹¶èµ‹å€¼ç»™UIå›¾ç‰‡
         //Material displayMaterial = new Material(Shader.Find("Unlit/Texture"));
         //displayMaterial.mainTexture = renderTexture;
         //targetImage.material = displayMaterial;
@@ -257,11 +262,11 @@ public class CameraDetect : MonoBehaviour
 
     private void OnDestroy()
     {
-        //// ÇåÀí£º»Ö¸´Ïà»úÄ¬ÈÏäÖÈ¾Ä¿±ê£¨±ÜÃâ³¡¾°ÇĞ»»ºóÏà»ú»­ÃæÒì³££©
+        //// æ¸…ç†ï¼šæ¢å¤ç›¸æœºé»˜è®¤æ¸²æŸ“ç›®æ ‡ï¼ˆé¿å…åœºæ™¯åˆ‡æ¢åç›¸æœºç”»é¢å¼‚å¸¸ï¼‰
         //if (targetCamera != null)
         //    targetCamera.targetTexture = null;
 
-        //// Ïú»Ù¶¯Ì¬´´½¨µÄ²ÄÖÊ£¨±ÜÃâÄÚ´æĞ¹Â©£©
+        //// é”€æ¯åŠ¨æ€åˆ›å»ºçš„æè´¨ï¼ˆé¿å…å†…å­˜æ³„æ¼ï¼‰
         //if (targetImage_Photo != null && targetImage_Photo.material != null)
         //    Destroy(targetImage_Photo.material);
     }
@@ -271,28 +276,28 @@ public class CameraDetect : MonoBehaviour
     {
 
 
-        // ×Ô¶¯»ñÈ¡×é¼ş£¨Èç¹ûÎ´ÔÚInspector¸³Öµ£©
+        // è‡ªåŠ¨è·å–ç»„ä»¶ï¼ˆå¦‚æœæœªåœ¨Inspectorèµ‹å€¼ï¼‰
         if (secondaryCamera == null)
         {
-            Debug.LogError("secondaryCameraÎ´¸³Öµ");
+            Debug.LogError("secondaryCameraæœªèµ‹å€¼");
         }
 
         if (targetImage_Camera == null)
             targetImage_Camera = GetComponent<Image>();
 
-        // ³õÊ¼»¯£ºÉèÖÃÏà»úµÄÄ¿±êäÖÈ¾ÎÆÀí
+        // åˆå§‹åŒ–ï¼šè®¾ç½®ç›¸æœºçš„ç›®æ ‡æ¸²æŸ“çº¹ç†
         if (renderTexture != null)
         {
 
 
-            // ´´½¨Ò»¸öÊ¹ÓÃ¸ÃäÖÈ¾ÎÆÀíµÄ²ÄÖÊ£¬²¢¸³Öµ¸øUIÍ¼Æ¬
+            // åˆ›å»ºä¸€ä¸ªä½¿ç”¨è¯¥æ¸²æŸ“çº¹ç†çš„æè´¨ï¼Œå¹¶èµ‹å€¼ç»™UIå›¾ç‰‡
             //Material displayMaterial = new Material(Shader.Find("Unlit/Texture"));
             displayMaterial.mainTexture = renderTexture;
             //targetImage_Camera.material = displayMaterial;
         }
         else
         {
-            Debug.LogError("Çë¸³ÖµRenderTexture£¡");
+            Debug.LogError("è¯·èµ‹å€¼RenderTextureï¼");
         }
 
     }
