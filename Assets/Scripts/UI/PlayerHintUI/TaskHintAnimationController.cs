@@ -84,6 +84,7 @@ public class TaskHintAnimationController : MonoBehaviour
         // 设置提示文字
         if (hintTextComponent != null)
         {
+            //hintText = GetHint(0);
             hintTextComponent.text = hintText;
         }
 

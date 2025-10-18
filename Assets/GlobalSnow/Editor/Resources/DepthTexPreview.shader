@@ -1,4 +1,4 @@
-﻿Shader "GlobalSnow/Editor/DepthTexPreview"
+﻿Shader "Hidden/GlobalSnow/Editor/DepthTexPreview"
 {
 	Properties
 	{
@@ -39,7 +39,11 @@
 			
 			fixed4 frag (v2f i) : SV_Target
 			{
-				return tex2D(_GS_DepthTexture, i.uv).rrrr;
+				float depth = tex2D(_GS_DepthTexture, i.uv).x;
+				#if UNITY_REVERSED_Z
+					depth = 1.0 - depth;
+				#endif
+				return depth;
 			}
 			ENDCG
 		}

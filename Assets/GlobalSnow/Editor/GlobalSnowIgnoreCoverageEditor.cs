@@ -9,10 +9,10 @@ namespace GlobalSnowEffect {
         SerializedProperty blockSnow, receiveSnow, useFastMaskShader, exclusionCutOff;
 
         private void OnEnable() {
-            blockSnow = serializedObject.FindProperty("_blockSnow");
-            receiveSnow = serializedObject.FindProperty("_receiveSnow");
-            useFastMaskShader = serializedObject.FindProperty("_useFastMaskShader");
-            exclusionCutOff = serializedObject.FindProperty("_exclusionCutOff");
+            blockSnow = serializedObject.FindProperty("blockSnow");
+            receiveSnow = serializedObject.FindProperty("receiveSnow");
+            useFastMaskShader = serializedObject.FindProperty("useFastMaskShader");
+            exclusionCutOff = serializedObject.FindProperty("exclusionCutOff");
         }
 
 
