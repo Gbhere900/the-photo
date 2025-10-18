@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,13 +28,13 @@ public class AlbumPageProperty
 [Serializable]
 public class AlbumPage
 {
-    private AlbumPageProperty albumPageProperty;
-    private Material photoMaterial;
+    [SerializeField] private AlbumPageProperty albumPageProperty;
+    [SerializeField] private Material photoMaterial;
 
-    public AlbumPage(AlbumPageProperty _albumPageProperty, Texture2D photoTexture)
+    public AlbumPage(AlbumPageProperty _albumPageProperty,Material photoMaterial)
     {
         albumPageProperty = _albumPageProperty;
-        photoTexture = photoTexture;
+        this.photoMaterial = photoMaterial;
     }
 
     public void SetPhotoImage(Material photoMaterial)

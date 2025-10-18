@@ -18,7 +18,7 @@ public class CameraDetect : MonoBehaviour
 
     [SerializeField] private Camera targetCamera; // 要捕获画面的相机（如主相机）
     [SerializeField] private Image targetImage_Photo; // 显示画面的UI图片
-    private Material currentPhotoMaterial;
+    public  Material currentPhotoMaterial;
 
     [SerializeField] private Camera secondaryCamera;
     [SerializeField] private Material displayMaterial;
