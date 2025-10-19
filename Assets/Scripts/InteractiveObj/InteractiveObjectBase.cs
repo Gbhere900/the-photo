@@ -13,6 +13,9 @@ public abstract class InteractiveObjectBase : MonoBehaviour
     [SerializeField] protected float cooldownTime;
     [SerializeField] protected bool isHighlight = false;
     [SerializeField] protected float outlineWidth = 10f;
+    
+    [Header("其它参数")]
+    [SerializeField] protected string name;
 
     private bool isIntersectingWithDetector = false;
     private bool isInSight = false;
@@ -56,6 +59,20 @@ public abstract class InteractiveObjectBase : MonoBehaviour
             isInSight = false;
         }
         
+        // UI按键提示
+        if (CanInteract)
+        {
+            Vector3 screenPosition = mainCamera.WorldToScreenPoint(this.transform.position);
+            InteractiveTooltip.Instance.ShowTooltip("I", name, screenPosition);
+        }
+        else
+        {
+            if (InteractiveTooltip.Instance.GetDescriptionText() == name && InteractiveTooltip.Instance.IsTooltipActive())
+            {
+                InteractiveTooltip.Instance.HideTooltip();   
+            }
+        }
+        
         // 检测玩家输入
         CheckPlayerInput();
     }
@@ -64,6 +81,14 @@ public abstract class InteractiveObjectBase : MonoBehaviour
     {
         get
         {
+            if (player)
+            {
+                Player playerScript = player.GetComponent<Player>();
+                if (playerScript && playerScript.GetIsCameraOn())
+                {
+                    return false;
+                }
+            }
             // 交互冷却时间判断
             if (cooldownTime > 0 && Time.time < lastInteractTime + cooldownTime)
             {
@@ -151,8 +176,6 @@ public abstract class InteractiveObjectBase : MonoBehaviour
             Debug.LogError("Can't interact with this object");
             return;
         }
-        
-        // Todo: 交互UI提示逻辑
         
         // 执行具体交互逻辑
         PerformInteraction();
