@@ -31,6 +31,7 @@ public class Drawer : InteractiveObjectBase
 
     protected override void PerformInteraction()
     {
+        base.PerformInteraction();
         if (isMoving)
         {
             return;

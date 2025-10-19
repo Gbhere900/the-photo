@@ -46,6 +46,7 @@ public class Door : InteractiveObjectBase
 
     protected override void PerformInteraction()
     {
+        base.PerformInteraction();
         if (isRotating)
         {
             return;

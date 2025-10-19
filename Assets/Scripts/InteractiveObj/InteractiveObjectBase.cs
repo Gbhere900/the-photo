@@ -13,6 +13,9 @@ public abstract class InteractiveObjectBase : MonoBehaviour
     [SerializeField] protected float cooldownTime;
     [SerializeField] protected bool isHighlight = false;
     [SerializeField] protected float outlineWidth = 10f;
+    [SerializeField] protected string audioClip = "";
+    [SerializeField] protected float audioDelay = 0f;
+    [SerializeField] protected bool ifPlayAudio = false;
     
     [Header("其它参数")]
     [SerializeField] protected string name;
@@ -24,6 +27,7 @@ public abstract class InteractiveObjectBase : MonoBehaviour
     protected Camera mainCamera;
 
     private QuickOutline outline;
+    protected Coroutine audioCoroutine;
     
     protected virtual void Start()
     {
@@ -182,12 +186,30 @@ public abstract class InteractiveObjectBase : MonoBehaviour
         // 记录交互时间
         lastInteractTime = Time.time;
     }
-    
+
     /// <summary>
     /// 具体交互逻辑
     /// </summary>
-    protected abstract void PerformInteraction();
+    protected virtual void PerformInteraction()
+    {
+        // 播放交互音效
+        if (ifPlayAudio && audioClip != string.Empty)
+        {
+            if (audioCoroutine != null)
+            {
+                StopCoroutine(audioCoroutine);
+            }
+            audioCoroutine = StartCoroutine(PlayAudioClip(audioClip, audioDelay));
+        }
+    }
 
+    protected IEnumerator PlayAudioClip(string audioClip, float audioDelay)
+    {
+        yield return new WaitForSeconds(audioDelay);
+        
+        AudioManager.instance.Play(audioClip);
+    }
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "InteractiveDetect")

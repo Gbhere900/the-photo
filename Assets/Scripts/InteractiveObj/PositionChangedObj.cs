@@ -21,6 +21,7 @@ public class PositionChangedObj : InteractiveObjectBase
 
     protected override void PerformInteraction()
     {
+        base.PerformInteraction();
         if (isInteracted)
         {
             return;

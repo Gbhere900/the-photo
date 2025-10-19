@@ -23,6 +23,7 @@ public class Letter : InteractiveObjectBase
 
     protected override void PerformInteraction()
     {
+        base.PerformInteraction();
         if (isOpen)
         {
             return;
