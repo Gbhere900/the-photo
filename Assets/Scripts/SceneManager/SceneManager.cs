@@ -24,6 +24,8 @@ public class SceneManager : MonoBehaviour
     [SerializeField] private AnimationCurve convertTimeLine;
     private bool isConverting = false;
     private float timer = 0;
+
+    [SerializeField] private Material[] skyBoxMaterial;
     public static SceneManager Instance()
     {
 
@@ -40,15 +42,19 @@ public class SceneManager : MonoBehaviour
     private void OnEnable()
     {
         OnWorldStateChange += BeginCameraConvert;
-        
+        OnWorldStateChange += ChangeSkyBox;   
     }
 
     private void OnDisable()
     {
         OnWorldStateChange -= BeginCameraConvert;
-        
+        OnWorldStateChange -= ChangeSkyBox;
     }
 
+    private void ChangeSkyBox(WorldState worldState)
+    {
+        RenderSettings.skybox = skyBoxMaterial[((int)worldState)];
+    }
     private void Update()
     {
         if (isConverting)
