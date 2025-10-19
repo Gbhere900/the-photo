@@ -1120,7 +1120,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   shakeFrequency: 2
-  shakeIntensity: 0.5
+  xShakeIntensity: 0.02
+  yShakeIntensity: 0.02
   cameraTransform: {fileID: 330585546}
 --- !u!1 &400394829
 GameObject:
@@ -1748,6 +1749,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldState: 2
   buttonClickedAudioClip: {fileID: 0}
+  targetImage: {fileID: 0}
+  convertTimeLine:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &633907792
 Transform:
   m_ObjectHideFlags: 0
@@ -2312,10 +2320,9 @@ MonoBehaviour:
   cameraTransform: {fileID: 330585546}
   cameraDetect: {fileID: 2083676210}
   cameraShake: {fileID: 330585548}
+  buttons: {fileID: 985613}
+  squatDownOffset: {x: 0, y: 0, z: 0}
   cameraAnimator: {fileID: 1375361761}
-  buttonsObject: {fileID: 985612}
-  buttonsCanvasGroup: {fileID: 985614}
-  uiFadeDuration: 0.4
 --- !u!1001 &723567691
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5998,7 +6005,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectAudio: {fileID: 0}
-  detectUI: {fileID: 982450841}
   checkPassUI: {fileID: 1833401246}
   targetCamera: {fileID: 1387663893}
   targetImage_Photo: {fileID: 162064398}
@@ -6007,12 +6013,7 @@ MonoBehaviour:
   displayMaterial: {fileID: 2100000, guid: 4be430bfeedb55d4aa76d9cfcdc6a973, type: 2}
   renderTexture: {fileID: 8400000, guid: e15a0ccc832ec0a4e8992dc15dacf5f7, type: 2}
   targetImage_Camera: {fileID: 948760230}
-  convertTimeLine:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  quickOutline: {fileID: 0}
   currentTaskDone: 0
 --- !u!136 &2083676211
 CapsuleCollider:
