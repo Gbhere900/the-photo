@@ -4908,6 +4908,9 @@ MonoBehaviour:
   cooldownTime: 1
   isHighlight: 1
   outlineWidth: 10
+  audioClip: 
+  audioDelay: 0
+  ifPlayAudio: 0
   name: 
   albumUI: {fileID: 2053024560}
 --- !u!114 &1739563908
@@ -5510,6 +5513,9 @@ MonoBehaviour:
   cooldownTime: 0.5
   isHighlight: 0
   outlineWidth: 10
+  audioClip: "\u6309\u4E0B\u6309\u94AE"
+  audioDelay: 0.5
+  ifPlayAudio: 1
   name: "\u62BD\u5C49"
   moveDirection: {x: 1, y: 0, z: 0}
   moveDistance: 2
