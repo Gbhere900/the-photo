@@ -27,7 +27,7 @@ public class AlbumManager : SingletonMonoBase<AlbumManager>
 
     private void Initialized()
     {
-        pages = new List<AlbumPage>(10);
+       
         //ShowPage();
         ChangePage(currentPageIndex);
     }
@@ -58,16 +58,19 @@ public class AlbumManager : SingletonMonoBase<AlbumManager>
         return null;
     }
 
-    public void AddPage(string taskId, string pageDescription, Material photoMaterial)
+    public void AddPage(string taskId, string pageDescription, Material photoMaterial,int index)
     {
         AlbumPageProperty albumPageProperty = new AlbumPageProperty(taskId, pageDescription);
         AlbumPage page = new AlbumPage(albumPageProperty, photoMaterial);
-        pages.Add(page);
+        //pages.Add(page);
+        pages[index] = page;
     }
     public void ShowPage()
     {
 
         albumUI.gameObject.SetActive(true);
+        SetCursorState(false);
+
     }
     public void ChangePage(int index)
     {
@@ -82,6 +85,7 @@ public class AlbumManager : SingletonMonoBase<AlbumManager>
     public void HidePage()
     {
         albumUI.gameObject.SetActive(false);
+        SetCursorState(true);
     }
 
     public void OnNextPageButtonDown()
@@ -127,5 +131,21 @@ public class AlbumManager : SingletonMonoBase<AlbumManager>
     public bool IsPagesEmpty()
     {
         return pages.Count == 0;
+    }
+
+    private void SetCursorState(bool locked)
+    {
+        if (locked)
+        {
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 }

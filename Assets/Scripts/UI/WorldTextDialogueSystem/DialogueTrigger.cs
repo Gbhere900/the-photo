@@ -23,9 +23,10 @@ public class DialogueTrigger : MonoBehaviour
             CameraDetect cameraDetect = player.GetCameraDetect();
             if (cameraDetect.currentTaskDone)
             {
-                TaskSystemManager.Instance.SetCurrentTaskCompleted();
                 Task task = TaskSystemManager.Instance.GetCurrentTask();
-                AlbumManager.Instance.AddPage(task.GetTaskId(), task.GetTaskDescription(), cameraDetect.currentPhotoMaterial);
+                AlbumManager.Instance.AddPage(task.GetTaskId(), task.GetTaskDescription(), cameraDetect.currentPhotoMaterial, TaskSystemManager.Instance.GetCurrentTaskIndex());
+                TaskSystemManager.Instance.SetCurrentTaskCompleted();
+               
                 cameraDetect.ResetPhoto();
             }
 

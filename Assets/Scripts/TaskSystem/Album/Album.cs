@@ -12,7 +12,7 @@ public class Album :InteractiveObjectBase
 
     protected override void PerformInteraction()
     {
-        albumUI.gameObject.SetActive(true);
+        AlbumManager.Instance.ShowPage();
     }
 
     
