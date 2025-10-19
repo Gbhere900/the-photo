@@ -759,6 +759,7 @@ MonoBehaviour:
   photoImage: {fileID: 1872351999}
   description: {fileID: 1694018092}
   animator: {fileID: 249467025}
+  TheEnd: {fileID: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -2106,6 +2107,8 @@ MonoBehaviour:
   cameraShake: {fileID: 330585548}
   buttons: {fileID: 51206333}
   squatDownOffset: {x: 0, y: -0.7, z: 0}
+  buttonsAnimationDuration: 0.5
+  buttonsOffScreenOffsetY: -200
   cameraAnimator: {fileID: 1375361761}
 --- !u!1 &722361666
 GameObject:
