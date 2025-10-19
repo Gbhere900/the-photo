@@ -9,10 +9,31 @@ public class AlbumUI : MonoBehaviour
     [SerializeField] private Image photoImage;
     [SerializeField] private TextMeshProUGUI description;
     [SerializeField] Animator animator;
+    [SerializeField] private TextMeshProUGUI TheEnd;
     string RTL = "<rotate=90>";
     public void ChangePage(string description,Material material)
     {
        
+        
+
+        if (material != null)
+        {
+            photoImage.gameObject.SetActive(true);
+            photoImage.material = material;
+        }
+        else
+        {
+            photoImage.gameObject.SetActive(false);
+        }
+        if (description == "")
+        {
+            TheEnd.gameObject.SetActive(true);
+        }
+        else
+        {
+            TheEnd.gameObject.SetActive(false);
+        }
+
         this.description.text = RTL + description + RTL;
 
         photoImage.material = material;
@@ -20,8 +41,29 @@ public class AlbumUI : MonoBehaviour
 
     public void ChangePage(AlbumPage page)
     {
-        this.description.text = page.GetAlbumPageProperty().GetPageDescription();
-        photoImage.material =page.GetPhotoMaterial();
+        Material material = page.GetPhotoMaterial();
+        string description = page.GetAlbumPageProperty().GetPageDescription();
+
+        this.description.text = RTL + description + RTL;
+        
+        if (material != null)
+        {
+            photoImage.gameObject.SetActive(true);
+            photoImage.material = material;
+        }
+        else
+        {
+            photoImage.gameObject.SetActive(false);
+        }
+        if (description == "")
+        {
+            TheEnd.gameObject.SetActive(true);
+        }
+        else
+        {
+            TheEnd.gameObject.SetActive(false);
+        }
+
     }
 
     private void OnEnable()
