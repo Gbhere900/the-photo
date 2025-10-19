@@ -87,7 +87,7 @@ public class TaskSystemManager : SingletonMonoBase<TaskSystemManager>
             return;
         }
         currentTask.SetTaskType(Task.TaskStatus.Completed);
-        Debug.Log(string.Format("任务:{{0}} 完成!", currentTask.GetTaskId()));
+        Debug.Log(string.Format("任务:{{%d}} 完成!", currentTaskIndex));
         currentTask = null;
         
         // 累加任务索引，指向下一个任务
