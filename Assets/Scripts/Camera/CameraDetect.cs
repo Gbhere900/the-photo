@@ -134,7 +134,8 @@ public class CameraDetect : MonoBehaviour
                     if (taskItem == TaskSystemManager.Instance.GetCurrentTask().GetTaskItem())
                     {
                         quickOutline = taskItem.GetComponent<QuickOutline>();
-                        TaskSystemManager.Instance.CheckTaskEvent();
+
+                       
                         return true;
 
                     }
@@ -259,6 +260,11 @@ public class CameraDetect : MonoBehaviour
 
         if (quickOutline)
         quickOutline.enabled = true;
+
+        //if (TaskSystemManager.Instance.GetCurrentTask().GetTaskId() == "OldMan")
+        //{
+        TaskSystemManager.Instance.CheckTaskEvent();
+        // }
     }
 
     private void OnDestroy()
@@ -282,6 +288,8 @@ public class CameraDetect : MonoBehaviour
         {
             Debug.LogError("secondaryCameraÎ´¸³Öµ");
         }
+
+
 
         if (targetImage_Camera == null)
             targetImage_Camera = GetComponent<Image>();

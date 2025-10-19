@@ -9,7 +9,7 @@ public class AlbumUI : MonoBehaviour
     [SerializeField] private Image photoImage;
     [SerializeField] private TextMeshProUGUI description;
     [SerializeField] Animator animator;
-    [SerializeField] private TextMeshProUGUI TheEnd;
+    [SerializeField] private Transform TheEnd;
     string RTL = "<rotate=90>";
     public void ChangePage(string description,Material material)
     {
