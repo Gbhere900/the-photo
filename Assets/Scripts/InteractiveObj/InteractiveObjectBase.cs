@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
@@ -8,13 +8,13 @@ using UnityEngine.UI;
 [RequireComponent(typeof(QuickOutline))]
 public abstract class InteractiveObjectBase : MonoBehaviour
 {
-    [Header("½»»¥²ÎÊı")]
+    [Header("äº¤äº’å‚æ•°")]
     [SerializeField] protected float interactiveDistance;
     [SerializeField] protected float cooldownTime;
     [SerializeField] protected bool isHighlight = false;
     [SerializeField] protected float outlineWidth = 10f;
     
-    [Header("ÆäËü²ÎÊı")]
+    [Header("å…¶å®ƒå‚æ•°")]
     [SerializeField] protected string name;
 
     private bool isIntersectingWithDetector = false;
@@ -35,7 +35,7 @@ public abstract class InteractiveObjectBase : MonoBehaviour
     
     protected virtual void Update()
     {
-        // ¸ßÁÁÂß¼­
+        // é«˜äº®é€»è¾‘
         isHighlight = CanInteract;
         if (outline)
         {
@@ -49,7 +49,7 @@ public abstract class InteractiveObjectBase : MonoBehaviour
             }
         }
         
-        // ÉäÏß¼ì²â
+        // å°„çº¿æ£€æµ‹
         if (isIntersectingWithDetector)
         {
             RayDetect();
@@ -59,7 +59,7 @@ public abstract class InteractiveObjectBase : MonoBehaviour
             isInSight = false;
         }
         
-        // ¼ì²âÍæ¼ÒÊäÈë
+        // æ£€æµ‹ç©å®¶è¾“å…¥
         CheckPlayerInput();
     }
     
@@ -75,17 +75,17 @@ public abstract class InteractiveObjectBase : MonoBehaviour
                     return false;
                 }
             }
-            // ½»»¥ÀäÈ´Ê±¼äÅĞ¶Ï
+            // äº¤äº’å†·å´æ—¶é—´åˆ¤æ–­
             if (cooldownTime > 0 && Time.time < lastInteractTime + cooldownTime)
             {
                 return false;
             }
-            // ½»»¥¾àÀëÅĞ¶Ï
+            // äº¤äº’è·ç¦»åˆ¤æ–­
             if (!player || !isIntersectingWithDetector)
             {
                 return false;
             }
-            // ÉäÏß¼ì²â
+            // å°„çº¿æ£€æµ‹
             if (!isInSight)
             {
                 return false;
@@ -103,10 +103,10 @@ public abstract class InteractiveObjectBase : MonoBehaviour
         int playerLayer = LayerMask.NameToLayer("CameraModel");
         LayerMask layerMask = ~(1 << playerLayer);
         bool isHit = Physics.Raycast(ray, out hit, interactiveDistance, layerMask);
-        // Èô»÷ÖĞÎïÌå
+        // è‹¥å‡»ä¸­ç‰©ä½“
         if (isHit)
         {
-            // ÅĞ¶Ï±»»÷ÖĞµÄÊÇ·ñÊÇ¿É½»»¥ÎïÌå±¾Éí
+            // åˆ¤æ–­è¢«å‡»ä¸­çš„æ˜¯å¦æ˜¯å¯äº¤äº’ç‰©ä½“æœ¬èº«
             if (hit.collider.gameObject == gameObject || hit.collider.transform.IsChildOf(transform))
             {
                 isInSight = true;
@@ -119,13 +119,13 @@ public abstract class InteractiveObjectBase : MonoBehaviour
     }
     
     /// <summary>
-    /// ÅĞ¶Ï½»»¥ÊÇ·ñ¿ÉĞĞ
+    /// åˆ¤æ–­äº¤äº’æ˜¯å¦å¯è¡Œ
     /// </summary>
     /// <returns></returns>
     protected abstract bool IsInteractionPossible();
 
     /// <summary>
-    /// ³õÊ¼»¯
+    /// åˆå§‹åŒ–
     /// </summary>
     protected virtual void Initialized()
     {
@@ -141,11 +141,11 @@ public abstract class InteractiveObjectBase : MonoBehaviour
     }
 
     /// <summary>
-    /// ¼ì²âÍæ¼ÒÊäÈë
+    /// æ£€æµ‹ç©å®¶è¾“å…¥
     /// </summary>
     private void CheckPlayerInput()
     {
-        // F¼ü½»»¥
+        // Fé”®äº¤äº’
         if (Input.GetKeyDown(KeyCode.I) && CanInteract)
         {
             Interact();
@@ -153,7 +153,7 @@ public abstract class InteractiveObjectBase : MonoBehaviour
     }
 
     /// <summary>
-    /// ½»»¥º¯Êı
+    /// äº¤äº’å‡½æ•°
     /// </summary>
     private void Interact()
     {
@@ -163,16 +163,16 @@ public abstract class InteractiveObjectBase : MonoBehaviour
             return;
         }
         
-        // Todo: ½»»¥UIÌáÊ¾Âß¼­
+        // Todo: äº¤äº’UIæç¤ºé€»è¾‘
         
-        // Ö´ĞĞ¾ßÌå½»»¥Âß¼­
+        // æ‰§è¡Œå…·ä½“äº¤äº’é€»è¾‘
         PerformInteraction();
-        // ¼ÇÂ¼½»»¥Ê±¼ä
+        // è®°å½•äº¤äº’æ—¶é—´
         lastInteractTime = Time.time;
     }
     
     /// <summary>
-    /// ¾ßÌå½»»¥Âß¼­
+    /// å…·ä½“äº¤äº’é€»è¾‘
     /// </summary>
     protected abstract void PerformInteraction();
 

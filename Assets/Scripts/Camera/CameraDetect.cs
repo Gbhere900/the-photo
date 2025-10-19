@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -12,7 +13,7 @@ public class CameraDetect : MonoBehaviour
     //[SerializeField] private Transform detectUI;
     [SerializeField] private Transform checkPassUI;
 
-   //[SerializeField] private TaskItem requestTaskItem;
+    //[SerializeField] private TaskItem requestTaskItem;
     private CapsuleCollider triggerCollider; // 胶囊体触发器
 
 
@@ -26,6 +27,7 @@ public class CameraDetect : MonoBehaviour
     [SerializeField] private Image targetImage_Camera;
 
     [SerializeField] private QuickOutline quickOutline;
+
     
 
     public  bool currentTaskDone = false;
@@ -42,7 +44,7 @@ public class CameraDetect : MonoBehaviour
         {
             quickOutline.enabled = true;
            // detectUI.gameObject.SetActive(true);
-            //TODO: ������Ч
+            //TODO: 播放音效
         }
 
 
@@ -132,6 +134,7 @@ public class CameraDetect : MonoBehaviour
                     if (taskItem == TaskSystemManager.Instance.GetCurrentTask().GetTaskItem())
                     {
                         quickOutline = taskItem.GetComponent<QuickOutline>();
+                        TaskSystemManager.Instance.CheckTaskEvent();
                         return true;
 
                     }
@@ -185,15 +188,10 @@ public class CameraDetect : MonoBehaviour
        
         if (CheckTaskItemInTrigger())
         {
-<<<<<<< Updated upstream
             //detectUI.gameObject.SetActive(true);
-            // ��ʾUI
+            // 显示UI
 
             quickOutline.enabled = true;
-=======
-            detectUI.gameObject.SetActive(true);
-            // 显示UI
->>>>>>> Stashed changes
         }
     }
 
