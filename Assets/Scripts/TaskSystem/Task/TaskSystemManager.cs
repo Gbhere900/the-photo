@@ -8,10 +8,22 @@ public class TaskSystemManager : SingletonMonoBase<TaskSystemManager>
 {
     [Header("任务队列")]
     [SerializeField] private List<Task> taskList = new List<Task>();
+
+    [Header("信封任务")]
+    [SerializeField] private string letterEventId;
+    private bool isLetterEventTriggered = false;
+    [SerializeField] private Transform LetterUI;
+
+    [Header("老人任务")]
+    [SerializeField] private string oldManEventId;
+    private bool isOldManEventTriggered = false;
+    [SerializeField] private Transform oldMan;
+    [SerializeField] private Album Album;
     
     [Header("当前任务")]
     [SerializeField] private Task currentTask;
     private int currentTaskIndex;
+
 
     protected override void Awake()
     {
@@ -119,4 +131,40 @@ public class TaskSystemManager : SingletonMonoBase<TaskSystemManager>
         }
         return true;
     }
+
+    public void CheckTaskEvent()
+    {
+        if (currentTask.GetTaskId() == letterEventId && !isLetterEventTriggered)
+        {
+            TriggerLetterEvent();
+            isLetterEventTriggered = true;
+        }
+        if (currentTask.GetTaskId() == oldManEventId && !isOldManEventTriggered)
+        {
+            TriggerOldmanEvent();
+            isOldManEventTriggered = true;
+        }
+    }
+    public void TriggerOldmanEvent()
+    {
+        oldMan.gameObject.SetActive(false) ;
+        Album.gameObject.SetActive(true) ;
+    }
+
+    public void TriggerLetterEvent()
+    {
+        LetterUI.gameObject.SetActive(true);
+    }
+
+    public void OnXButtonClicked()
+    {
+        HideLetterUI();
+        //TODO: Play Audio
+    }
+    private void HideLetterUI()
+    {
+        LetterUI.gameObject.SetActive(false);
+    }
+
+    
 }
