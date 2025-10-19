@@ -58,7 +58,7 @@ public class SceneManager : MonoBehaviour
                 timer += Time.deltaTime;
                 float value = convertTimeLine.Evaluate(timer);
                 Material material = targetImage.material;
-                material.SetFloat("_Opacity", value);
+                material.SetFloat("_Offset", value);
             }
             else
             {
