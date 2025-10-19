@@ -1,18 +1,29 @@
-ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-// ä»»åŠ¡ç®¡ç†ç±»å•ä¾‹
+// ÈÎÎñ¹ÜÀíÀàµ¥Àı
 public class TaskSystemManager : SingletonMonoBase<TaskSystemManager>
 {
-    [Header("ä»»åŠ¡é˜Ÿåˆ—")]
+    [Header("ÈÎÎñ¶ÓÁĞ")]
     [SerializeField] private List<Task> taskList = new List<Task>();
+
+    [Header("ĞÅ·âÈÎÎñ")]
+    [SerializeField] private string letterEventId;
+    private bool isLetterEventTriggered = false;
+    [SerializeField] private Transform LetterUI;
+
+    [Header("ÀÏÈËÈÎÎñ")]
+    [SerializeField] private string oldManEventId;
+    private bool isOldManEventTriggered = false;
+    [SerializeField] private Transform oldMan;
+    [SerializeField] private Album Album;
     
-    [Header("å½“å‰ä»»åŠ¡")]
+    [Header("µ±Ç°ÈÎÎñ")]
     [SerializeField] private Task currentTask;
     private int currentTaskIndex;
+
 
     protected override void Awake()
     {
@@ -21,7 +32,7 @@ public class TaskSystemManager : SingletonMonoBase<TaskSystemManager>
     }
     
     /// <summary>
-    /// åˆå§‹åŒ–å‡½æ•°
+    /// ³õÊ¼»¯º¯Êı
     /// </summary>
     private void Initialized()
     {
@@ -31,16 +42,16 @@ public class TaskSystemManager : SingletonMonoBase<TaskSystemManager>
         }
         currentTaskIndex = 0;
         currentTask = taskList[currentTaskIndex];
-        // å°†æ‰€æœ‰ä»»åŠ¡çŠ¶æ€é‡ç½®ä¸ºå¾…æ¥å–
+        // ½«ËùÓĞÈÎÎñ×´Ì¬ÖØÖÃÎª´ı½ÓÈ¡
         foreach (Task task in taskList)
         {
             task.SetTaskType(Task.TaskStatus.Pending);
         }
     }
 
-    //--------------------------å…¬å…±æ¥å£--------------------------
+    //--------------------------¹«¹²½Ó¿Ú--------------------------
     /// <summary>
-    /// é‡ç½®ä»»åŠ¡ä¸ºå¾…æ¥å–çŠ¶æ€
+    /// ÖØÖÃÈÎÎñÎª´ı½ÓÈ¡×´Ì¬
     /// </summary>
     public void ResetCurrentTask()
     {
@@ -53,7 +64,7 @@ public class TaskSystemManager : SingletonMonoBase<TaskSystemManager>
     }
     
     /// <summary>
-    /// æ¥å–å½“å‰ä»»åŠ¡
+    /// ½ÓÈ¡µ±Ç°ÈÎÎñ
     /// </summary>
     public void AcceptCurrentTask()
     {
@@ -66,7 +77,7 @@ public class TaskSystemManager : SingletonMonoBase<TaskSystemManager>
     }
     
     /// <summary>
-    /// å°†å½“å‰ä»»åŠ¡è®¾ä¸ºå®Œæˆï¼Œå¹¶ç´¯åŠ ä»»åŠ¡ç´¢å¼•
+    /// ½«µ±Ç°ÈÎÎñÉèÎªÍê³É£¬²¢ÀÛ¼ÓÈÎÎñË÷Òı
     /// </summary>
     public void SetCurrentTaskCompleted()
     {
@@ -76,10 +87,10 @@ public class TaskSystemManager : SingletonMonoBase<TaskSystemManager>
             return;
         }
         currentTask.SetTaskType(Task.TaskStatus.Completed);
-        Debug.Log(string.Format("ä»»åŠ¡:{{0}} å®Œæˆ!", currentTask.GetTaskId()));
+        Debug.Log(string.Format("ÈÎÎñ:{{0}} Íê³É!", currentTask.GetTaskId()));
         currentTask = null;
         
-        // ç´¯åŠ ä»»åŠ¡ç´¢å¼•ï¼ŒæŒ‡å‘ä¸‹ä¸€ä¸ªä»»åŠ¡
+        // ÀÛ¼ÓÈÎÎñË÷Òı£¬Ö¸ÏòÏÂÒ»¸öÈÎÎñ
         currentTaskIndex++;
         if (currentTaskIndex >= taskList.Count)
         {
@@ -121,9 +132,39 @@ public class TaskSystemManager : SingletonMonoBase<TaskSystemManager>
         return true;
     }
 
-    //è¿™ä¸ªæˆ‘å…ˆéšä¾¿é¡¶ç€äº†
-    internal void CheckTaskEvent()
+    public void CheckTaskEvent()
     {
-        throw new NotImplementedException();
+        if (currentTask.GetTaskId() == letterEventId && !isLetterEventTriggered)
+        {
+            TriggerLetterEvent();
+            isLetterEventTriggered = true;
+        }
+        if (currentTask.GetTaskId() == oldManEventId && !isOldManEventTriggered)
+        {
+            TriggerOldmanEvent();
+            isOldManEventTriggered = true;
+        }
     }
+    public void TriggerOldmanEvent()
+    {
+        oldMan.gameObject.SetActive(false) ;
+        Album.gameObject.SetActive(true) ;
+    }
+
+    public void TriggerLetterEvent()
+    {
+        LetterUI.gameObject.SetActive(true);
+    }
+
+    public void OnXButtonClicked()
+    {
+        HideLetterUI();
+        //TODO: Play Audio
+    }
+    private void HideLetterUI()
+    {
+        LetterUI.gameObject.SetActive(false);
+    }
+
+    
 }

@@ -1,4 +1,4 @@
-﻿using Unity.VisualScripting;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -174,7 +174,7 @@ public class Player : MonoBehaviour
     }
 
     public bool GetIsCameraOn()
-    {
+    { 
         return isCameraOn;
     }
 }

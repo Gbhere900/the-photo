@@ -8,11 +8,12 @@ public class AlbumUI : MonoBehaviour
 {
     [SerializeField] private Image photoImage;
     [SerializeField] private TextMeshProUGUI description;
-
+    [SerializeField] Animator animator;
+    string RTL = "<rotate=90>";
     public void ChangePage(string description,Material material)
     {
        
-        this.description.text = description;
+        this.description.text = RTL + description + RTL;
 
         photoImage.material = material;
     }
@@ -28,6 +29,7 @@ public class AlbumUI : MonoBehaviour
         if (!AlbumManager.Instance.IsPagesEmpty())
         {
             ChangePage(AlbumManager.Instance.GetCurrentPage());
+            animator.Play("Show");
         }
 
     }
