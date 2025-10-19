@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -26,6 +27,7 @@ public class CameraDetect : MonoBehaviour
     [SerializeField] private Image targetImage_Camera;
 
     [SerializeField] private QuickOutline quickOutline;
+
     
 
     public  bool currentTaskDone = false;
@@ -132,6 +134,7 @@ public class CameraDetect : MonoBehaviour
                     if (taskItem == TaskSystemManager.Instance.GetCurrentTask().GetTaskItem())
                     {
                         quickOutline = taskItem.GetComponent<QuickOutline>();
+                        TaskSystemManager.Instance.CheckTaskEvent();
                         return true;
 
                     }
@@ -139,6 +142,7 @@ public class CameraDetect : MonoBehaviour
                 }
             }
         }
+        quickOutline = null;
         return false;
     }
 
@@ -214,6 +218,7 @@ public class CameraDetect : MonoBehaviour
     {
 
         //float timer
+        if(quickOutline)
         quickOutline.enabled = false;
       
         RenderTexture tempRenderTexture = new RenderTexture(Screen.width, Screen.height, 24);
@@ -252,6 +257,7 @@ public class CameraDetect : MonoBehaviour
         targetCamera.targetTexture = null;
         secondaryCamera.targetTexture = renderTexture;
 
+        if (quickOutline)
         quickOutline.enabled = true;
     }
 

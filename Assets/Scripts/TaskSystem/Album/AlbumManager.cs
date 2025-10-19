@@ -58,12 +58,6 @@ public class AlbumManager : SingletonMonoBase<AlbumManager>
         return null;
     }
 
-    private void InsertPage(string taskId, string pageDescription, Material photoMaterial, int index)
-    {
-        AlbumPageProperty albumPageProperty = new AlbumPageProperty(taskId, pageDescription);
-        AlbumPage page = new AlbumPage(albumPageProperty, photoMaterial);
-        pages[index] = page;
-    }
     public void AddPage(string taskId, string pageDescription, Material photoMaterial)
     {
         AlbumPageProperty albumPageProperty = new AlbumPageProperty(taskId, pageDescription);
@@ -77,7 +71,7 @@ public class AlbumManager : SingletonMonoBase<AlbumManager>
     }
     public void ChangePage(int index)
     {
-        if (index >= pages.Count)
+        if (index >= pages.Count )
         {
             Debug.LogWarning("超出索引范围，无法更改到目标页面");
             return ; 
@@ -92,21 +86,31 @@ public class AlbumManager : SingletonMonoBase<AlbumManager>
 
     public void OnNextPageButtonDown()
     {
-        NextPage();
+        if (currentPageIndex < pages.Count - 1)
+        {
+            NextPage();
+        }
+        
 
         //TODO:PlayAudio
     }
 
     public void OnLastPageButtonDown()
     {
-        LastPage();
+        if (currentPageIndex > 0)
+        {
+            LastPage();
+        }
+        
         //TODO:PlayAudio
     }
 
     private void NextPage()
     {
+        
         currentPageIndex++;
         ChangePage(currentPageIndex);
+
     }
 
     private void LastPage()
