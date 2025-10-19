@@ -18,7 +18,7 @@ public class TaskSystemManager : SingletonMonoBase<TaskSystemManager>
     [SerializeField] private string oldManEventId;
     private bool isOldManEventTriggered = false;
     [SerializeField] private Transform oldMan;
-    [SerializeField] private Album Album;
+    [SerializeField] private Transform albumUI;
     
     [Header("当前任务")]
     [SerializeField] private Task currentTask;
@@ -148,7 +148,7 @@ public class TaskSystemManager : SingletonMonoBase<TaskSystemManager>
     public void TriggerOldmanEvent()
     {
         oldMan.gameObject.SetActive(false) ;
-        Album.gameObject.SetActive(true) ;
+        albumUI.gameObject.SetActive(true) ;
     }
 
     public void TriggerLetterEvent()
