@@ -86,23 +86,23 @@ public class Drawer : InteractiveObjectBase
     {
         isMoving = true;
         
-        Vector3 startPosition = transform.position;
+        Vector3 startPosition = transform.localPosition;
         float length = Vector3.Distance(startPosition, targetPosition);
         float startTime = Time.time;
         
         // 移动抽屉
-        while (transform.position != targetPosition)
+        while (transform.localPosition != targetPosition)
         {
             // 计算已移动距离和已移动距离占总移动距离的占比
             float distanceCovered = (Time.time - startTime) * moveSpeed;
             float fractionOfJourney = distanceCovered / length;
             // 使用Lerp平滑移动
-            transform.position = Vector3.Lerp(startPosition, targetPosition, fractionOfJourney);
+            transform.localPosition = Vector3.Lerp(startPosition, targetPosition, fractionOfJourney);
             yield return null;
         }
         
         // 确保最终位置准确
-        transform.position = targetPosition;
+        transform.localPosition = targetPosition;
         isMoving = false;
         // 若最终是打开状态
         if (targetPosition == openPosition)

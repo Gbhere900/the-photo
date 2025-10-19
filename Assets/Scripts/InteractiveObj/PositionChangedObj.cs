@@ -5,17 +5,13 @@ using UnityEngine;
 public class PositionChangedObj : InteractiveObjectBase
 {
     [SerializeField] private Transform targetTransform;
-    [SerializeField] private GameObject otherObj;
+
     private bool isInteracted = false;
     
     protected override void Initialized()
     {
         base.Initialized();
         isInteracted = false;
-        if (otherObj != null)
-        {
-            otherObj.SetActive(false);
-        }
     }
 
     protected override bool IsInteractionPossible()
@@ -31,20 +27,7 @@ public class PositionChangedObj : InteractiveObjectBase
             return;
         }
         isInteracted = true;
-        if (otherObj == null)
-        {
-            this.gameObject.transform.position = targetTransform.position;
-            this.gameObject.transform.rotation = targetTransform.rotation;   
-        }
-        else
-        {
-            otherObj.gameObject.SetActive(true);
-            if (InteractiveTooltip.Instance.GetDescriptionText() == name)
-            {
-                InteractiveTooltip.Instance.HideTooltip();
-            }
-            this.gameObject.SetActive(false);
-        }
+        this.gameObject.transform.position = targetTransform.position;
     }
 
     public bool IsInteracted()
