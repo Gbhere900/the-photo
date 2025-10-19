@@ -7,15 +7,16 @@ public class Door : InteractiveObjectBase
 {
     [FormerlySerializedAs("rotateAxis")]
     [Header("门参数")]
-    [SerializeField] private Transform rotatePivot;
+    //[SerializeField] private Transform rotatePivot;
+    [SerializeField] private Vector3 rotateAxis = Vector3.up; // 旋转轴（本地坐标系）
     [SerializeField] private float rotateAngle = 90f;
     [SerializeField] private float rotateSpeed = 90f; // 度/秒
     
     private bool isOpen = false;
     private bool isRotating = false;
-    private Vector3 closedPosition;
+    //private Vector3 closedPosition;
     private Quaternion closedRotation;
-    private Vector3 openPosition;
+    //private Vector3 openPosition;
     private Quaternion openRotation;
     
     private Coroutine rotateCoroutine;
@@ -24,19 +25,14 @@ public class Door : InteractiveObjectBase
     {
         base.Initialized();
         
-        if (rotatePivot == null)
-        {
-            rotatePivot = transform;
-        }
-        
-        closedPosition = transform.position;
-        closedRotation = transform.rotation;
-        
         // 计算旋转角度
-        Vector3 pivotToDoor = transform.position - rotatePivot.position;
+        closedRotation = transform.localRotation;
+        openRotation = closedRotation * Quaternion.AngleAxis(rotateAngle, rotateAxis);
+        
+        /*Vector3 pivotToDoor = transform.position - rotatePivot.position;
         Vector3 rotatedPivotToDoor = Quaternion.Euler(0, rotateAngle, 0) * pivotToDoor;
         openPosition = rotatePivot.position + rotatedPivotToDoor;
-        openRotation = closedRotation * Quaternion.Euler(0, rotateAngle, 0);
+        openRotation = closedRotation * Quaternion.Euler(0, rotateAngle, 0);*/
     }
 
     protected override bool IsInteractionPossible()
@@ -73,7 +69,7 @@ public class Door : InteractiveObjectBase
         {
             StopCoroutine(rotateCoroutine);
         }
-        rotateCoroutine = StartCoroutine(RotateDoor(openPosition, openRotation));
+        rotateCoroutine = StartCoroutine(RotateDoor(openRotation));
         isOpen = true;
     }
 
@@ -88,17 +84,15 @@ public class Door : InteractiveObjectBase
         {
             StopCoroutine(rotateCoroutine);
         }
-        rotateCoroutine = StartCoroutine(RotateDoor(closedPosition, closedRotation));
+        rotateCoroutine = StartCoroutine(RotateDoor(closedRotation));
         isOpen = false;
     }
 
-    private IEnumerator RotateDoor(Vector3 targetPosition, Quaternion targetRotation)
+    private IEnumerator RotateDoor(Quaternion targetRotation)
     {
         isRotating = true;
         
-        Vector3 startPosition = transform.position;
         Quaternion startRotation = transform.localRotation;
-        
         float angleDifference = Quaternion.Angle(startRotation, targetRotation);
         float rotationTime = angleDifference / rotateSpeed;
         float elapsedTime = 0f;
@@ -109,23 +103,13 @@ public class Door : InteractiveObjectBase
             elapsedTime += Time.deltaTime;
             float t = Mathf.Clamp01(elapsedTime / rotationTime);
             
-            // 使用球面插值计算旋转
-            Quaternion newRotation = Quaternion.Slerp(startRotation, targetRotation, t);
-            
-            // 计算新位置（绕轴心点旋转）
-            Vector3 pivotToDoor = startPosition - rotatePivot.position;
-            Vector3 rotatedPivotToDoor = newRotation * Quaternion.Inverse(startRotation) * pivotToDoor;
-            Vector3 newPosition = rotatePivot.position + rotatedPivotToDoor;
-            
-            // 应用新的位置和旋转
-            transform.position = newPosition;
-            transform.rotation = newRotation;
+            // 使用Slerp进行球面插值，适合旋转
+            transform.localRotation = Quaternion.Slerp(startRotation, targetRotation, t);
             
             yield return null;
         }
         
-        transform.position = targetPosition;
-        transform.rotation = targetRotation;
+        transform.localRotation = targetRotation;
         isRotating = false;
     }
 }
