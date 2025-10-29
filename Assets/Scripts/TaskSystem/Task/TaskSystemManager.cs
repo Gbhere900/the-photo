@@ -1,26 +1,26 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-// ÈÎÎñ¹ÜÀíÀàµ¥Àı
+// ä»»åŠ¡ç®¡ç†ç±»å•ä¾‹
 public class TaskSystemManager : SingletonMonoBase<TaskSystemManager>
 {
-    [Header("ÈÎÎñ¶ÓÁĞ")]
+    [Header("ä»»åŠ¡é˜Ÿåˆ—")]
     [SerializeField] private List<Task> taskList = new List<Task>();
 
-    [Header("ĞÅ·âÈÎÎñ")]
+    [Header("ä¿¡å°ä»»åŠ¡")]
     [SerializeField] private string letterEventId;
     private bool isLetterEventTriggered = false;
     [SerializeField] private Transform LetterUI;
 
-    [Header("ÀÏÈËÈÎÎñ")]
+    [Header("è€äººä»»åŠ¡")]
     [SerializeField] private string oldManEventId;
     private bool isOldManEventTriggered = false;
     [SerializeField] private Transform oldMan;
-    [SerializeField] private Album Album;
+    [SerializeField] private Transform AlbumUI;
     
-    [Header("µ±Ç°ÈÎÎñ")]
+    [Header("å½“å‰ä»»åŠ¡")]
     [SerializeField] private Task currentTask;
     private int currentTaskIndex;
 
@@ -32,7 +32,7 @@ public class TaskSystemManager : SingletonMonoBase<TaskSystemManager>
     }
     
     /// <summary>
-    /// ³õÊ¼»¯º¯Êı
+    /// åˆå§‹åŒ–å‡½æ•°
     /// </summary>
     private void Initialized()
     {
@@ -42,16 +42,16 @@ public class TaskSystemManager : SingletonMonoBase<TaskSystemManager>
         }
         currentTaskIndex = 0;
         currentTask = taskList[currentTaskIndex];
-        // ½«ËùÓĞÈÎÎñ×´Ì¬ÖØÖÃÎª´ı½ÓÈ¡
+        // å°†æ‰€æœ‰ä»»åŠ¡çŠ¶æ€é‡ç½®ä¸ºå¾…æ¥å–
         foreach (Task task in taskList)
         {
             task.SetTaskType(Task.TaskStatus.Pending);
         }
     }
 
-    //--------------------------¹«¹²½Ó¿Ú--------------------------
+    //--------------------------å…¬å…±æ¥å£--------------------------
     /// <summary>
-    /// ÖØÖÃÈÎÎñÎª´ı½ÓÈ¡×´Ì¬
+    /// é‡ç½®ä»»åŠ¡ä¸ºå¾…æ¥å–çŠ¶æ€
     /// </summary>
     public void ResetCurrentTask()
     {
@@ -64,7 +64,7 @@ public class TaskSystemManager : SingletonMonoBase<TaskSystemManager>
     }
     
     /// <summary>
-    /// ½ÓÈ¡µ±Ç°ÈÎÎñ
+    /// æ¥å–å½“å‰ä»»åŠ¡
     /// </summary>
     public void AcceptCurrentTask()
     {
@@ -77,7 +77,7 @@ public class TaskSystemManager : SingletonMonoBase<TaskSystemManager>
     }
     
     /// <summary>
-    /// ½«µ±Ç°ÈÎÎñÉèÎªÍê³É£¬²¢ÀÛ¼ÓÈÎÎñË÷Òı
+    /// å°†å½“å‰ä»»åŠ¡è®¾ä¸ºå®Œæˆï¼Œå¹¶ç´¯åŠ ä»»åŠ¡ç´¢å¼•
     /// </summary>
     public void SetCurrentTaskCompleted()
     {
@@ -87,10 +87,10 @@ public class TaskSystemManager : SingletonMonoBase<TaskSystemManager>
             return;
         }
         currentTask.SetTaskType(Task.TaskStatus.Completed);
-        Debug.Log(string.Format("ÈÎÎñ:{{%d}} Íê³É!", currentTaskIndex));
+        Debug.Log(string.Format("ä»»åŠ¡:{{%d}} å®Œæˆ!", currentTaskIndex));
         currentTask = null;
         
-        // ÀÛ¼ÓÈÎÎñË÷Òı£¬Ö¸ÏòÏÂÒ»¸öÈÎÎñ
+        // ç´¯åŠ ä»»åŠ¡ç´¢å¼•ï¼ŒæŒ‡å‘ä¸‹ä¸€ä¸ªä»»åŠ¡
         currentTaskIndex++;
         if (currentTaskIndex >= taskList.Count)
         {
@@ -148,7 +148,8 @@ public class TaskSystemManager : SingletonMonoBase<TaskSystemManager>
     public void TriggerOldmanEvent()
     {
         oldMan.gameObject.SetActive(false) ;
-        Album.gameObject.SetActive(true) ;
+        AlbumUI.gameObject.SetActive(true) ;
+        AlbumManager.Instance.ChangePage(0);
     }
 
     public void TriggerLetterEvent()

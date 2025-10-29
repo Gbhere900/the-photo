@@ -2322,6 +2322,8 @@ MonoBehaviour:
   cameraShake: {fileID: 330585548}
   buttons: {fileID: 985613}
   squatDownOffset: {x: 0, y: 0, z: 0}
+  buttonsAnimationDuration: 0.5
+  buttonsOffScreenOffsetY: -200
   cameraAnimator: {fileID: 1375361761}
 --- !u!1001 &723567691
 PrefabInstance:
@@ -2647,6 +2649,11 @@ MonoBehaviour:
     description: 55555
     taskItem: {fileID: 1263845553}
     taskStatus: 0
+  letterEventId: 
+  LetterUI: {fileID: 0}
+  oldManEventId: 
+  oldMan: {fileID: 0}
+  Album: {fileID: 0}
   currentTask:
     id: 
     description: 
@@ -3755,6 +3762,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   photoImage: {fileID: 1872351999}
   description: {fileID: 1694018092}
+  animator: {fileID: 0}
+  TheEnd: {fileID: 0}
 --- !u!1 &1469174345
 GameObject:
   m_ObjectHideFlags: 0

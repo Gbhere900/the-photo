@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2507624659402450672}
   - component: {fileID: 749468837204118827}
   - component: {fileID: 7977384897083543327}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Dialogue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ TextMesh:
   m_GameObject: {fileID: 4771672766700689249}
   m_Text: Hello World
   m_OffsetZ: 0
-  m_CharacterSize: 0.035
+  m_CharacterSize: 0.015
   m_LineSpacing: 1
   m_Anchor: 4
   m_Alignment: 1
@@ -110,4 +110,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe566b157ca704141afdd9b93f390869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localOffset: {x: 0, y: 2, z: 0}
+  localOffset: {x: 0, y: 1, z: 0}
+  typeSpeed: 0.04

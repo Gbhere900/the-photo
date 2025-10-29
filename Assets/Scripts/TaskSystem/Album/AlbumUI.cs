@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class AlbumUI : MonoBehaviour
 {
     [SerializeField] private Image photoImage;
+    [SerializeField] private Image backgroundImage;
     [SerializeField] private TextMeshProUGUI description;
     [SerializeField] Animator animator;
     [SerializeField] private Transform TheEnd;
@@ -19,15 +20,19 @@ public class AlbumUI : MonoBehaviour
         if (material != null)
         {
             photoImage.gameObject.SetActive(true);
+            backgroundImage.gameObject.SetActive(true);
             photoImage.material = material;
         }
         else
         {
             photoImage.gameObject.SetActive(false);
+            backgroundImage.gameObject.SetActive(false);
         }
-        if (description == "")
+        if (AlbumManager.Instance.currentPageIndex == 6)
         {
             TheEnd.gameObject.SetActive(true);
+
+            
         }
         else
         {

@@ -8,7 +8,7 @@ public class BGMTrigger : MonoBehaviour
     {
         if (!triggered && other.CompareTag("Player"))
         {
-            BGMController.instance.PlaySceneBGM();
+            //BGMController.instance.PlaySceneBGM();
             triggered = true;
         }
     }

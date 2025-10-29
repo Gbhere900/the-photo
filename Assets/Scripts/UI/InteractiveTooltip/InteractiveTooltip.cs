@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEditor.UI;
+﻿using TMPro;
 using UnityEngine;
 
 public class InteractiveTooltip : SingletonMonoBase<InteractiveTooltip>
@@ -9,9 +6,9 @@ public class InteractiveTooltip : SingletonMonoBase<InteractiveTooltip>
     [SerializeField] private TextMeshProUGUI keyText;
     [SerializeField] private TextMeshProUGUI desText;
     [SerializeField] private Vector3 positionOffset;
-        
+
     private RectTransform tooltipRect;
-    
+
     void Start()
     {
         tooltipRect = GetComponent<RectTransform>();

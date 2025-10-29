@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,12 +14,12 @@ public class CameraDetect : MonoBehaviour
     [SerializeField] private Transform checkPassUI;
 
     //[SerializeField] private TaskItem requestTaskItem;
-    private CapsuleCollider triggerCollider; // ½ºÄÒÌå´¥·¢Æ÷
+    private CapsuleCollider triggerCollider; // ï¿½ï¿½ï¿½ï¿½ï¿½å´¥ï¿½ï¿½ï¿½ï¿½
 
 
-    [SerializeField] private Camera targetCamera; // Òª²¶»ñ»­ÃæµÄÏà»ú£¨ÈçÖ÷Ïà»ú£©
-    [SerializeField] private Image targetImage_Photo; // ÏÔÊ¾»­ÃæµÄUIÍ¼Æ¬
-    public  Material currentPhotoMaterial;
+    [SerializeField] private Camera targetCamera; // Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    [SerializeField] private Image targetImage_Photo; // ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½UIÍ¼Æ¬
+    public Material currentPhotoMaterial;
 
     [SerializeField] private Camera secondaryCamera;
     [SerializeField] private Material displayMaterial;
@@ -28,13 +28,14 @@ public class CameraDetect : MonoBehaviour
 
     [SerializeField] private QuickOutline quickOutline;
 
-    
+    [SerializeField] private Shader unlitTextureShader;
 
-    public  bool currentTaskDone = false;
+
+    public bool currentTaskDone = false;
     private void Awake()
     {
-        
-        
+
+
     }
 
     private void OnEnable()
@@ -43,8 +44,8 @@ public class CameraDetect : MonoBehaviour
         if (CheckTaskItemInTrigger())
         {
             quickOutline.enabled = true;
-           // detectUI.gameObject.SetActive(true);
-            //TODO: ²¥·ÅÒôÐ§
+            // detectUI.gameObject.SetActive(true);
+            //TODO: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§
         }
 
 
@@ -60,40 +61,40 @@ public class CameraDetect : MonoBehaviour
         //    detectUI.gameObject.SetActive(false);
         //}
 
-        
+
         SceneManager.Instance().OnWorldStateChange -= ResetDetectUI;
     }
 
     //private void CheckTrigger()
     //{
     //    triggerCollider = GetComponent<CapsuleCollider>();
-    //    Vector3 center = transform.TransformPoint(triggerCollider.center); // ½ºÄÒÌåÖÐÐÄ£¨ÊÀ½ç×ø±ê£©
-    //    float height = triggerCollider.height; // ½ºÄÒÌå¸ß¶È£¨°üº¬Á½¸ö°ëÇò£©
-    //    float radius = triggerCollider.radius; // ½ºÄÒÌå°ë¾¶
+    //    Vector3 center = transform.TransformPoint(triggerCollider.center); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê£©
+    //    float height = triggerCollider.height; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¶È£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    //    float radius = triggerCollider.radius; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë¾¶
 
-    //    // ½ºÄÒÌåµÄÖáÏò£¨CapsuleColliderÄ¬ÈÏYÖá£¬¿ÉÍ¨¹ýdirectionÐÞ¸Ä£º0=X£¬1=Y£¬2=Z£©
-    //    Vector3 axis = Vector3.up; // Ä¬ÈÏYÖá
+    //    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½CapsuleColliderÄ¬ï¿½ï¿½Yï¿½á£¬ï¿½ï¿½Í¨ï¿½ï¿½directionï¿½Þ¸Ä£ï¿½0=Xï¿½ï¿½1=Yï¿½ï¿½2=Zï¿½ï¿½
+    //    Vector3 axis = Vector3.up; // Ä¬ï¿½ï¿½Yï¿½ï¿½
     //    if (triggerCollider.direction == 0) axis = Vector3.right;
     //    else if (triggerCollider.direction == 2) axis = Vector3.forward;
 
-    //    // ¼ÆËã½ºÄÒÌåµÄÁ½¸ö¶Ëµã£¨ÊÀ½ç×ø±ê£©
-    //    Vector3 point1 = center + axis * (height / 2 - radius); // ÉÏ¶Ëµã
-    //    Vector3 point2 = center - axis * (height / 2 - radius); // ÏÂ¶Ëµã
+    //    // ï¿½ï¿½ï¿½ã½ºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµã£¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê£©
+    //    Vector3 point1 = center + axis * (height / 2 - radius); // ï¿½Ï¶Ëµï¿½
+    //    Vector3 point2 = center - axis * (height / 2 - radius); // ï¿½Â¶Ëµï¿½
 
-    //    // ÊÖ¶¯¼ì²â½ºÄÒÌåÄÚµÄËùÓÐÅö×²Ìå
+    //    // ï¿½Ö¶ï¿½ï¿½ï¿½â½ºï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×²ï¿½ï¿½
     //    Collider[] overlappedColliders = Physics.OverlapCapsule(
-    //        point1,       // ½ºÄÒÌåÉÏ¶Ëµã
-    //        point2,       // ½ºÄÒÌåÏÂ¶Ëµã
-    //        radius,       // ½ºÄÒÌå°ë¾¶
-    //        ~0            // ¼ì²âËùÓÐ²ã¼¶£¨¿É×Ô¶¨Òå²ã¼¶ÑÚÂë£©
+    //        point1,       // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¶Ëµï¿½
+    //        point2,       // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¶Ëµï¿½
+    //        radius,       // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë¾¶
+    //        ~0            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð²ã¼¶ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ã¼¶ï¿½ï¿½ï¿½ë£©
     //    );
 
-    //    // ±éÀú¼ì²âµ½µÄÅö×²Ìå£¬Ä£Äâ´¥·¢OnTriggerEnter
+    //    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½âµ½ï¿½ï¿½ï¿½ï¿½×²ï¿½å£¬Ä£ï¿½â´¥ï¿½ï¿½OnTriggerEnter
     //    foreach (var col in overlappedColliders)
     //    {
-    //        if (col != triggerCollider) // ÅÅ³ý×ÔÉíÅö×²Ìå
+    //        if (col != triggerCollider) // ï¿½Å³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×²ï¿½ï¿½
     //        {
-    //            OnTriggerEnter(col); // µ÷ÓÃ´¥·¢Âß¼­
+    //            OnTriggerEnter(col); // ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½ï¿½ß¼ï¿½
     //        }
     //    }
     //}
@@ -101,41 +102,44 @@ public class CameraDetect : MonoBehaviour
     private bool CheckTaskItemInTrigger()
     {
         triggerCollider = GetComponent<CapsuleCollider>();
-        Vector3 center = transform.TransformPoint(triggerCollider.center); // ½ºÄÒÌåÖÐÐÄ£¨ÊÀ½ç×ø±ê£©
-        float height = triggerCollider.height; // ½ºÄÒÌå¸ß¶È£¨°üº¬Á½¸ö°ëÇò£©
-        float radius = triggerCollider.radius; // ½ºÄÒÌå°ë¾¶
+        Vector3 center = transform.TransformPoint(triggerCollider.center); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê£©
+        float height = triggerCollider.height; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¶È£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        float radius = triggerCollider.radius; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë¾¶
 
-        // ½ºÄÒÌåµÄÖáÏò£¨CapsuleColliderÄ¬ÈÏYÖá£¬¿ÉÍ¨¹ýdirectionÐÞ¸Ä£º0=X£¬1=Y£¬2=Z£©
-        Vector3 axis = Vector3.up; // Ä¬ÈÏYÖá
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½CapsuleColliderÄ¬ï¿½ï¿½Yï¿½á£¬ï¿½ï¿½Í¨ï¿½ï¿½directionï¿½Þ¸Ä£ï¿½0=Xï¿½ï¿½1=Yï¿½ï¿½2=Zï¿½ï¿½
+        Vector3 axis = Vector3.up; // Ä¬ï¿½ï¿½Yï¿½ï¿½
         if (triggerCollider.direction == 0) axis = Vector3.right;
         else if (triggerCollider.direction == 2) axis = Vector3.forward;
 
-        // ¼ÆËã½ºÄÒÌåµÄÁ½¸ö¶Ëµã£¨ÊÀ½ç×ø±ê£©
-        Vector3 point1 = center + axis * (height / 2 - radius); // ÉÏ¶Ëµã
-        Vector3 point2 = center - axis * (height / 2 - radius); // ÏÂ¶Ëµã
+        // ï¿½ï¿½ï¿½ã½ºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµã£¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê£©
+        Vector3 point1 = center + axis * (height / 2 ); // ï¿½Ï¶Ëµï¿½
+        Vector3 point2 = center - axis * (height / 2 ); // ï¿½Â¶Ëµï¿½
 
-        // ÊÖ¶¯¼ì²â½ºÄÒÌåÄÚµÄËùÓÐÅö×²Ìå
+        // ï¿½Ö¶ï¿½ï¿½ï¿½â½ºï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×²ï¿½ï¿½
         Collider[] overlappedColliders = Physics.OverlapCapsule(
-            point1,       // ½ºÄÒÌåÉÏ¶Ëµã
-            point2,       // ½ºÄÒÌåÏÂ¶Ëµã
-            radius,       // ½ºÄÒÌå°ë¾¶
-            ~0            // ¼ì²âËùÓÐ²ã¼¶£¨¿É×Ô¶¨Òå²ã¼¶ÑÚÂë£©
+            point1,       // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¶Ëµï¿½
+            point2,       // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¶Ëµï¿½
+            radius,       // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë¾¶
+            ~0            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð²ã¼¶ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ã¼¶ï¿½ï¿½ï¿½ë£©
         );
 
-        // ±éÀú¼ì²âµ½µÄÅö×²Ìå£¬Ä£Äâ´¥·¢OnTriggerEnter
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½âµ½ï¿½ï¿½ï¿½ï¿½×²ï¿½å£¬Ä£ï¿½â´¥ï¿½ï¿½OnTriggerEnter
         foreach (var col in overlappedColliders)
         {
-            if (col != triggerCollider) // ÅÅ³ý×ÔÉíÅö×²Ìå
+            if (col != triggerCollider) // ï¿½Å³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×²ï¿½ï¿½
             {
                 TaskItem taskItem;
                 if (col.TryGetComponent<TaskItem>(out taskItem))
                 {
-                    
+
                     if (taskItem == TaskSystemManager.Instance.GetCurrentTask().GetTaskItem())
                     {
                         quickOutline = taskItem.GetComponent<QuickOutline>();
 
+<<<<<<< Updated upstream
                        
+=======
+>>>>>>> Stashed changes
                         return true;
 
                     }
@@ -156,11 +160,11 @@ public class CameraDetect : MonoBehaviour
     //        if (taskItem == requestTaskItem)
     //        {
     //            Debug.Log("Detected" + other.gameObject.name);
-    //            // ÏÔÊ¾UI
+    //            // ï¿½ï¿½Ê¾UI
 
 
     //            detectUIPrefab.gameObject.SetActive(true);
-    //            //TODO: ²¥·ÅÒôÐ§£¬UI
+    //            //TODO: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½UI
     //        }
 
     //    }
@@ -183,15 +187,15 @@ public class CameraDetect : MonoBehaviour
     private void ResetDetectUI(WorldState worldState)
     {
         //detectUI.gameObject.SetActive(false);
-        if (quickOutline!= null)
+        if (quickOutline != null)
         {
             quickOutline.enabled = false;
         }
-       
+
         if (CheckTaskItemInTrigger())
         {
             //detectUI.gameObject.SetActive(true);
-            // ÏÔÊ¾UI
+            // ï¿½ï¿½Ê¾UI
 
             quickOutline.enabled = true;
         }
@@ -206,22 +210,28 @@ public class CameraDetect : MonoBehaviour
         {
             checkPassUI.gameObject.SetActive(true);
             currentTaskDone = true;
-            //TODO: ²¥·ÅÒôÐ§£¬UI
+            //TODO: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½UI
         }
         else
         {
             checkPassUI.gameObject.SetActive(false);
             currentTaskDone = false;
-            //TODO: ²¥·ÅÒôÐ§£¬UI
+            //TODO: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½UI
+        }
+
+        if (currentTaskDone)
+        {
+
+            TaskSystemManager.Instance.CheckTaskEvent();
         }
     }
     public IEnumerator OutputToPhotoIEnumerator()
     {
 
         //float timer
-        if(quickOutline)
-        quickOutline.enabled = false;
-      
+        if (quickOutline)
+            quickOutline.enabled = false;
+
         RenderTexture tempRenderTexture = new RenderTexture(Screen.width, Screen.height, 24);
         targetCamera.targetTexture = tempRenderTexture;
         targetCamera.Render();
@@ -243,14 +253,14 @@ public class CameraDetect : MonoBehaviour
         photoTexture.Apply();
 
         RenderTexture.active = null;
-        currentPhotoMaterial = new Material(Shader.Find("Unlit/Texture"));
+        currentPhotoMaterial = new Material(unlitTextureShader);
         currentPhotoMaterial.mainTexture = photoTexture;
-        
+
         targetImage_Photo.material = currentPhotoMaterial;
 
 
 
-        //// ´´½¨Ò»¸öÊ¹ÓÃ¸ÃäÖÈ¾ÎÆÀíµÄ²ÄÖÊ£¬²¢¸³Öµ¸øUIÍ¼Æ¬
+        //// ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ê¹ï¿½Ã¸ï¿½ï¿½ï¿½È¾ï¿½ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½Ê£ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½UIÍ¼Æ¬
         //Material displayMaterial = new Material(Shader.Find("Unlit/Texture"));
         //displayMaterial.mainTexture = renderTexture;
         //targetImage.material = displayMaterial;
@@ -258,35 +268,50 @@ public class CameraDetect : MonoBehaviour
         targetCamera.targetTexture = null;
         secondaryCamera.targetTexture = renderTexture;
 
+        if (currentTaskDone)
+        {
+            if (TaskSystemManager.Instance.GetCurrentTask().GetTaskId() == "OldMan")
+            {
+
+                AlbumManager.Instance.AddPage(TaskSystemManager.Instance.GetCurrentTask().GetTaskId(), TaskSystemManager.Instance.GetCurrentTask().GetTaskDescription(), currentPhotoMaterial, TaskSystemManager.Instance.GetCurrentTaskIndex());
+            }
+        }
+
         if (quickOutline)
+<<<<<<< Updated upstream
         quickOutline.enabled = true;
 
         //if (TaskSystemManager.Instance.GetCurrentTask().GetTaskId() == "OldMan")
         //{
         TaskSystemManager.Instance.CheckTaskEvent();
         // }
+=======
+            quickOutline.enabled = true;
+
+
+>>>>>>> Stashed changes
     }
 
     private void OnDestroy()
     {
-        //// ÇåÀí£º»Ö¸´Ïà»úÄ¬ÈÏäÖÈ¾Ä¿±ê£¨±ÜÃâ³¡¾°ÇÐ»»ºóÏà»ú»­ÃæÒì³££©
+        //// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½ï¿½È¾Ä¿ï¿½ê£¨ï¿½ï¿½ï¿½â³¡ï¿½ï¿½ï¿½Ð»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì³£ï¿½ï¿½
         //if (targetCamera != null)
         //    targetCamera.targetTexture = null;
 
-        //// Ïú»Ù¶¯Ì¬´´½¨µÄ²ÄÖÊ£¨±ÜÃâÄÚ´æÐ¹Â©£©
+        //// ï¿½ï¿½ï¿½Ù¶ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½Ê£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú´ï¿½Ð¹Â©ï¿½ï¿½
         //if (targetImage_Photo != null && targetImage_Photo.material != null)
         //    Destroy(targetImage_Photo.material);
     }
 
 
-    public  void OutPutToCamera()
+    public void OutPutToCamera()
     {
 
 
-        // ×Ô¶¯»ñÈ¡×é¼þ£¨Èç¹ûÎ´ÔÚInspector¸³Öµ£©
+        // ï¿½Ô¶ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î´ï¿½ï¿½Inspectorï¿½ï¿½Öµï¿½ï¿½
         if (secondaryCamera == null)
         {
-            Debug.LogError("secondaryCameraÎ´¸³Öµ");
+            Debug.LogError("secondaryCameraÎ´ï¿½ï¿½Öµ");
         }
 
 
@@ -294,19 +319,19 @@ public class CameraDetect : MonoBehaviour
         if (targetImage_Camera == null)
             targetImage_Camera = GetComponent<Image>();
 
-        // ³õÊ¼»¯£ºÉèÖÃÏà»úµÄÄ¿±êäÖÈ¾ÎÆÀí
+        // ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½È¾ï¿½ï¿½ï¿½ï¿½
         if (renderTexture != null)
         {
 
 
-            // ´´½¨Ò»¸öÊ¹ÓÃ¸ÃäÖÈ¾ÎÆÀíµÄ²ÄÖÊ£¬²¢¸³Öµ¸øUIÍ¼Æ¬
+            // ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ê¹ï¿½Ã¸ï¿½ï¿½ï¿½È¾ï¿½ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½Ê£ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½UIÍ¼Æ¬
             //Material displayMaterial = new Material(Shader.Find("Unlit/Texture"));
             displayMaterial.mainTexture = renderTexture;
             //targetImage_Camera.material = displayMaterial;
         }
         else
         {
-            Debug.LogError("Çë¸³ÖµRenderTexture£¡");
+            Debug.LogError("ï¿½ë¸³ÖµRenderTextureï¿½ï¿½");
         }
 
     }

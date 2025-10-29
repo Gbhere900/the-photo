@@ -14,7 +14,7 @@ public class AlbumManager : SingletonMonoBase<AlbumManager>
     [SerializeField] private AlbumUI albumUI;
 
 
-    private int currentPageIndex = 0;
+    public int currentPageIndex = 0;
 
     protected void Awake()
     {

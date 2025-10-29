@@ -8,7 +8,7 @@ public class BGMController : MonoBehaviour
     [System.Serializable]
     public class SceneBGM
     {
-        public string sceneName;
+        public string sceneName; // 这个字段现在只起一个注释作用
         public List<string> bgmNames;
         public bool randomPlay = true;
     }
@@ -16,11 +16,12 @@ public class BGMController : MonoBehaviour
     private float checkTimer = 0f;
     private float checkInterval = 5f; // 每 5 秒检查一次是否播完
 
-    [Header("场景对应 BGM 配置")]
-    public List<SceneBGM> sceneBGMs;
+    [Header("全局 BGM 播放列表")]
+    [Tooltip("现在只会使用列表中的第一个元素（Element 0）作为全局播放列表")]
+    public List<SceneBGM> sceneBGMs; // <-- 重要：现在只会使用这个列表的第一个配置
 
     private string currentPlayingBGM = "";
-    private string lastSceneName = "";
+    // private string lastSceneName = ""; // <-- 不再需要
 
     public static BGMController instance;
 
@@ -30,7 +31,8 @@ public class BGMController : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+            // --- 修改点 1: 注释掉对场景加载的监听 ---
+            // UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
@@ -38,10 +40,20 @@ public class BGMController : MonoBehaviour
         }
     }
 
+    // --- 新增 Start 方法，用于在游戏开始时启动BGM ---
+    private void Start()
+    {
+        // 游戏一开始就准备播放BGM
+        StartCoroutine(PlayBGMWhenReady());
+    }
+
     private void OnDestroy()
     {
         if (instance == this)
-            UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+        {
+            // --- 修改点 2: 同样注释掉取消监听的代码 ---
+            // UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
     }
 
     private void Update()
@@ -62,23 +74,16 @@ public class BGMController : MonoBehaviour
         }
     }
 
+    // --- 修改点 3: OnSceneLoaded 方法可以完全注释掉或删除了，因为它不再被调用 ---
+    /*
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (!string.IsNullOrEmpty(currentPlayingBGM) && AudioManager.instance != null)
-        {
-            AudioManager.instance.Stop(currentPlayingBGM);
-        }
-
-        currentPlayingBGM = "";
-        lastSceneName = scene.name;
-
-        if (scene.name == "StartPage")
-        {
-            StartCoroutine(DelayedPlay());
-        }
+        // 所有逻辑都已失效，因为我们不再监听这个事件
     }
+    */
 
-    private IEnumerator DelayedPlay()
+    // 这个方法取代了之前的 DelayedPlay
+    private IEnumerator PlayBGMWhenReady()
     {
         // 等待 AudioManager.instance 初始化
         while (AudioManager.instance == null)
@@ -92,7 +97,7 @@ public class BGMController : MonoBehaviour
             yield return null;
         }
 
-        PlaySceneBGM(); // 主页面自动播 BGM
+        PlayGlobalBGM(); // 开始播放全局BGM
     }
 
     private bool IsAudioManagerReady()
@@ -110,21 +115,26 @@ public class BGMController : MonoBehaviour
         return true;
     }
 
-    //播放当前场景bgm
-    public void PlaySceneBGM()
+    // 这个方法取代了之前的 PlaySceneBGM
+    public void PlayGlobalBGM()
     {
-        string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-
         if (AudioManager.instance == null)
         {
             Debug.LogError("AudioManager 未初始化！");
             return;
         }
 
-        SceneBGM config = sceneBGMs.Find(s => s.sceneName == sceneName);
+        // --- 修改点 4: 不再根据场景名查找，而是直接使用第一个配置 ---
+        if (sceneBGMs == null || sceneBGMs.Count == 0)
+        {
+            Debug.LogWarning("BGMController 没有配置任何 BGM 列表！");
+            return;
+        }
+        SceneBGM config = sceneBGMs[0]; // 直接获取第一个配置作为全局列表
+
         if (config == null || config.bgmNames.Count == 0)
         {
-            Debug.LogWarning($"场景 {sceneName} 没有配置可用 BGM");
+            Debug.LogWarning($"全局BGM列表（Element 0）没有配置可用 BGM");
             return;
         }
 
@@ -140,8 +150,10 @@ public class BGMController : MonoBehaviour
 
     private void PlayNextRandomBGM()
     {
-        string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        SceneBGM config = sceneBGMs.Find(s => s.sceneName == sceneName);
+        // --- 修改点 5: 同样，直接使用第一个配置 ---
+        if (sceneBGMs == null || sceneBGMs.Count == 0) return;
+        SceneBGM config = sceneBGMs[0];
+
         if (config == null || config.bgmNames.Count == 0) return;
 
         string next;
@@ -161,6 +173,4 @@ public class BGMController : MonoBehaviour
     {
         return System.Array.Find(AudioManager.instance.AudioTypes, a => a.Name == name);
     }
-
-
 }
