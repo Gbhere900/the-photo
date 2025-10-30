@@ -20,6 +20,7 @@ public class CameraDetect : MonoBehaviour
     [SerializeField] private Camera targetCamera; // Ҫ���������������������
     [SerializeField] private Image targetImage_Photo; // ��ʾ�����UIͼƬ
     public Material currentPhotoMaterial;
+    public Material currentPhotoMaterial;
 
     [SerializeField] private Camera secondaryCamera;
     [SerializeField] private Material displayMaterial;
@@ -30,10 +31,15 @@ public class CameraDetect : MonoBehaviour
 
     [SerializeField] private Shader unlitTextureShader;
 
+    [SerializeField] private Shader unlitTextureShader;
 
+
+    public bool currentTaskDone = false;
     public bool currentTaskDone = false;
     private void Awake()
     {
+
+
 
 
     }
@@ -44,6 +50,7 @@ public class CameraDetect : MonoBehaviour
         if (CheckTaskItemInTrigger())
         {
             quickOutline.enabled = true;
+            // detectUI.gameObject.SetActive(true);
             // detectUI.gameObject.SetActive(true);
             //TODO: ������Ч
         }
@@ -60,6 +67,7 @@ public class CameraDetect : MonoBehaviour
         //{
         //    detectUI.gameObject.SetActive(false);
         //}
+
 
 
         SceneManager.Instance().OnWorldStateChange -= ResetDetectUI;
@@ -114,6 +122,8 @@ public class CameraDetect : MonoBehaviour
         // ���㽺����������˵㣨�������꣩
         Vector3 point1 = center + axis * (height / 2 ); // �϶˵�
         Vector3 point2 = center - axis * (height / 2 ); // �¶˵�
+        Vector3 point1 = center + axis * (height / 2 ); // �϶˵�
+        Vector3 point2 = center - axis * (height / 2 ); // �¶˵�
 
         // �ֶ���⽺�����ڵ�������ײ��
         Collider[] overlappedColliders = Physics.OverlapCapsule(
@@ -131,6 +141,7 @@ public class CameraDetect : MonoBehaviour
                 TaskItem taskItem;
                 if (col.TryGetComponent<TaskItem>(out taskItem))
                 {
+
 
                     if (taskItem == TaskSystemManager.Instance.GetCurrentTask().GetTaskItem())
                     {
@@ -188,9 +199,11 @@ public class CameraDetect : MonoBehaviour
     {
         //detectUI.gameObject.SetActive(false);
         if (quickOutline != null)
+        if (quickOutline != null)
         {
             quickOutline.enabled = false;
         }
+
 
         if (CheckTaskItemInTrigger())
         {
@@ -224,11 +237,20 @@ public class CameraDetect : MonoBehaviour
 
             TaskSystemManager.Instance.CheckTaskEvent();
         }
+
+        if (currentTaskDone)
+        {
+
+            TaskSystemManager.Instance.CheckTaskEvent();
+        }
     }
     public IEnumerator OutputToPhotoIEnumerator()
     {
 
         //float timer
+        if (quickOutline)
+            quickOutline.enabled = false;
+
         if (quickOutline)
             quickOutline.enabled = false;
 
@@ -254,7 +276,9 @@ public class CameraDetect : MonoBehaviour
 
         RenderTexture.active = null;
         currentPhotoMaterial = new Material(unlitTextureShader);
+        currentPhotoMaterial = new Material(unlitTextureShader);
         currentPhotoMaterial.mainTexture = photoTexture;
+
 
         targetImage_Photo.material = currentPhotoMaterial;
 
@@ -267,6 +291,15 @@ public class CameraDetect : MonoBehaviour
 
         targetCamera.targetTexture = null;
         secondaryCamera.targetTexture = renderTexture;
+
+        if (currentTaskDone)
+        {
+            if (TaskSystemManager.Instance.GetCurrentTask().GetTaskId() == "OldMan")
+            {
+
+                AlbumManager.Instance.AddPage(TaskSystemManager.Instance.GetCurrentTask().GetTaskId(), TaskSystemManager.Instance.GetCurrentTask().GetTaskDescription(), currentPhotoMaterial, TaskSystemManager.Instance.GetCurrentTaskIndex());
+            }
+        }
 
         if (currentTaskDone)
         {
@@ -304,6 +337,7 @@ public class CameraDetect : MonoBehaviour
     }
 
 
+    public void OutPutToCamera()
     public void OutPutToCamera()
     {
 

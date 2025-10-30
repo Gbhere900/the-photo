@@ -40,6 +40,7 @@ public class SceneManager : MonoBehaviour
         instance = this;
 
         ChangeSkyBox(WorldState.Old);
+        ChangeSkyBox(WorldState.Old);
     }
 
     private void OnEnable()
@@ -89,11 +90,14 @@ public class SceneManager : MonoBehaviour
         timer = 0;
 
 
+
+
     }
 
     private void EndCameraConvert()
     {
         isConverting = false;
+
 
     }
 
@@ -117,11 +121,13 @@ public class SceneManager : MonoBehaviour
     {
         WorldStateChangeToYouth();
         //TODO:播放音效
+        //TODO:播放音效
     }
 
     public void OnButtonAdultClicked()
     {
         WorldStateChangeToAdult();
+        //播放音效
         //播放音效
     }
 
@@ -129,10 +135,12 @@ public class SceneManager : MonoBehaviour
     {
         WorldStateChangeToOld();
         //播放音效
+        //播放音效
     }
     public void WorldStateChangeToYouth()
     {
         ChangeWorldState(WorldState.Youth);
+
 
     }
 
@@ -140,17 +148,24 @@ public class SceneManager : MonoBehaviour
     {
         ChangeWorldState(WorldState.Adult);
 
+
     }
     public void WorldStateChangeToOld()
     {
         ChangeWorldState(WorldState.Old);
+
 
     }
 
     public void ChangeSkyBox(WorldState worldState)
     {
         RenderSettings.skybox = skyBoxs[(int)worldState];
+    public void ChangeSkyBox(WorldState worldState)
+    {
+        RenderSettings.skybox = skyBoxs[(int)worldState];
 
+        DynamicGI.UpdateEnvironment();
+    }
         DynamicGI.UpdateEnvironment();
     }
 
